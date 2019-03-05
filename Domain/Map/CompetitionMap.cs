@@ -9,6 +9,11 @@ namespace champi.Domain.Map
         public void Configure(EntityTypeBuilder<Competition> builder)
         {
             builder
+                .HasOne(x => x.ChampionTeam)
+                .WithMany(x => x.ChampionCompetitions)
+                .HasForeignKey(x => x.ChampionTeamId);
+
+            builder
                 .Property(x => x.Name).HasMaxLength(200);
 
             builder

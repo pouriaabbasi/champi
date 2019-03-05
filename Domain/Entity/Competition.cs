@@ -15,8 +15,9 @@ namespace champi.Domain.Entity
         public bool IsCompleted { get; set; }
         public long? ChampionTeamId { get; set; }
 
-        // public Team ChampionTeam { get; set; }
+        public Team ChampionTeam { get; set; }
 
         public ICollection<CompetitionStep> CompetitionSteps { get; set; }
+        public ICollection<CompetitionTeam> CompetitionTeams { get; set; }
     }
 }

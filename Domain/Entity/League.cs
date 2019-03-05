@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using champi.Domain.Base;
 
 namespace champi.Domain.Entity
@@ -10,5 +11,7 @@ namespace champi.Domain.Entity
         public int PeerToPeerPlayCount { get; set; }
 
         public CompetitionStep CompetitionStep { get; set; }
+
+        public ICollection<LeagueTeam> LeagueTeams { get; set; }
     }
 }
