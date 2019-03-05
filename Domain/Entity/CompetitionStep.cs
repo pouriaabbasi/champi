@@ -9,9 +9,11 @@ namespace champi.Domain.Entity
     {
         public long CompetitionId { get; set; }
         public int Step { get; set; }
-        public CompetitionTypeKind CompetitionTypeKind { get; set; }
+        public CompetitionTypeKind CompetitionType { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public bool IsStarted { get; set; }
+        public bool IsCompleted { get; set; }
 
         public Competition Competition { get; set; }
 

@@ -15,5 +15,6 @@ namespace champi.Domain.Entity
         public CompetitionStep CompetitionStep { get; set; }
 
         public ICollection<LeagueTeam> LeagueTeams { get; set; }
+        public ICollection<LeagueResult> LeagueResults { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace champi.Domain.Entity
         public ICollection<LeagueMatch> LeagueMatchesFirstTeam { get; set; }
         public ICollection<LeagueMatch> LeagueMatchesSecondTeam { get; set; }
         public ICollection<LeagueMatch> LeagueMatchesWinnerTeam { get; set; }
+        public ICollection<LeagueResult> LeagueResults { get; set; }
     }
 }
