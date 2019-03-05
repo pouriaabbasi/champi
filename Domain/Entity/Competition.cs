@@ -6,6 +6,7 @@ namespace champi.Domain.Entity
 {
     public class Competition : BaseEntity
     {
+        public long GameTypeId { get; set; }
         public string Name { get; set; }
         public int Iteration { get; set; }
         public int TeamCount { get; set; }
@@ -16,6 +17,7 @@ namespace champi.Domain.Entity
         public long? ChampionTeamId { get; set; }
 
         public Team ChampionTeam { get; set; }
+        public GameType GameType {get;set;}
 
         public ICollection<CompetitionStep> CompetitionSteps { get; set; }
         public ICollection<CompetitionTeam> CompetitionTeams { get; set; }

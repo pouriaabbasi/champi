@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using champi.Domain.Base;
 
 namespace champi.Domain.Entity
@@ -9,5 +10,9 @@ namespace champi.Domain.Entity
 
         public League League { get; set; }
         public CompetitionTeam CompetitionTeam { get; set; }
+
+        public ICollection<LeagueMatch> LeagueMatchesFirstTeam { get; set; }
+        public ICollection<LeagueMatch> LeagueMatchesSecondTeam { get; set; }
+        public ICollection<LeagueMatch> LeagueMatchesWinnerTeam { get; set; }
     }
 }

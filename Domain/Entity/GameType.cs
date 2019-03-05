@@ -11,5 +11,6 @@ namespace champi.Domain.Entity
         public GameType ParentGameType { get; set; }
 
         public ICollection<GameType> ChildGameTypes { get; set; }
+        public ICollection<Competition> Competitions { get; set; }
     }
 }

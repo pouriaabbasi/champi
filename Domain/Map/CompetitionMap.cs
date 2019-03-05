@@ -12,6 +12,10 @@ namespace champi.Domain.Map
                 .HasOne(x => x.ChampionTeam)
                 .WithMany(x => x.ChampionCompetitions)
                 .HasForeignKey(x => x.ChampionTeamId);
+            builder
+                .HasOne(x => x.GameType)
+                .WithMany(x => x.Competitions)
+                .HasForeignKey(x => x.GameTypeId);
 
             builder
                 .Property(x => x.Name).HasMaxLength(200);
