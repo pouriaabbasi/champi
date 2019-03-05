@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
+using champi.Domain.Base;
 
-namespace champi.Domain.Base
+namespace champi.Domain.Entity
 {
     public class Competition : BaseEntity
     {
@@ -14,5 +16,7 @@ namespace champi.Domain.Base
         public long? ChampionTeamId { get; set; }
 
         // public Team ChampionTeam { get; set; }
+
+        public ICollection<CompetitionStep> CompetitionSteps { get; set; }
     }
 }

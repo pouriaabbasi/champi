@@ -1,4 +1,4 @@
-using champi.Domain.Base;
+using champi.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

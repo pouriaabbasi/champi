@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using champi.Domain.Entity;
 
 namespace champi.Domain.Map
 {
