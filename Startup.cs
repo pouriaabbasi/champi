@@ -1,5 +1,7 @@
 using champi.Context;
 using champi.Context.Repository;
+using champi.Libs.Contracts;
+using champi.Libs.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,8 +33,11 @@ namespace champi
 
             services.AddDbContext<MainDbContext>(options => options.UseSqlServer(ConnectionString));
 
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<DbContext, MainDbContext>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddScoped<IGameTypeLib, GameTypeLib>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
