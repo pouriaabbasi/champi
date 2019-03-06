@@ -33,9 +33,9 @@ namespace champi
 
             services.AddDbContext<MainDbContext>(options => options.UseSqlServer(ConnectionString));
 
-            services.AddTransient<DbContext, MainDbContext>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<DbContext, MainDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped<IGameTypeLib, GameTypeLib>();
 

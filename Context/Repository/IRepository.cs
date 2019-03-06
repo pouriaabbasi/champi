@@ -8,6 +8,7 @@ namespace champi.Context.Repository
     {
         IEnumerable<T> GetAll();
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
+        T FirstOrDefault(Expression<Func<T, bool>> predicate);
         void Add(T entity);
         void Delete(T entity);
         void Update(T entity);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace champi.Context.Repository
@@ -12,7 +13,7 @@ namespace champi.Context.Repository
         {
             _unitOfWork = unitOfWork;
         }
-        
+
         public void Add(T entity)
         {
             _unitOfWork.Context.Set<T>().Add(entity);
@@ -20,8 +21,7 @@ namespace champi.Context.Repository
 
         public void Delete(T entity)
         {
-            T existing = _unitOfWork.Context.Set<T>().Find(entity);
-            if (existing != null) _unitOfWork.Context.Set<T>().Remove(existing);
+            _unitOfWork.Context.Set<T>().Remove(entity);
         }
 
         public IEnumerable<T> GetAll()
@@ -29,9 +29,14 @@ namespace champi.Context.Repository
             return _unitOfWork.Context.Set<T>().AsEnumerable<T>();
         }
 
-        public IEnumerable<T> Get(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> Get(Expression<Func<T, bool>> predicate)
         {
             return _unitOfWork.Context.Set<T>().Where(predicate).AsEnumerable<T>();
+        }
+
+        public T FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _unitOfWork.Context.Set<T>().FirstOrDefault(predicate);
         }
 
         public void Update(T entity)
