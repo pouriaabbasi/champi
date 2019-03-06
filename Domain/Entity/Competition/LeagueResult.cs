@@ -1,7 +1,7 @@
 using champi.Domain.Base;
 using champi.Domain.Enum;
 
-namespace champi.Domain.Entity
+namespace champi.Domain.Entity.Competition
 {
     public class LeagueResult : BaseEntity
     {

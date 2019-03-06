@@ -1,8 +1,8 @@
-using champi.Domain.Entity;
+using champi.Domain.Entity.Competition;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace champi.Domain.Map
+namespace champi.Domain.Map.Competition
 {
     public class CompetitionTeamMap : IEntityTypeConfiguration<CompetitionTeam>
     {
@@ -11,11 +11,13 @@ namespace champi.Domain.Map
             builder
                 .HasOne(x => x.Competition)
                 .WithMany(x => x.CompetitionTeams)
-                .HasForeignKey(x => x.CompetitionId);
+                .HasForeignKey(x => x.CompetitionId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder
                 .HasOne(x => x.Team)
                 .WithMany(x => x.CompetitionTeams)
-                .HasForeignKey(x => x.TeamId);
+                .HasForeignKey(x => x.TeamId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .ToTable("CompetitionTeam", "Competition");

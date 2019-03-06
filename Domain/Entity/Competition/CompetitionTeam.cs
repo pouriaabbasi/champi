@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using champi.Domain.Base;
 
-namespace champi.Domain.Entity
+namespace champi.Domain.Entity.Competition
 {
     public class CompetitionTeam : BaseEntity
     {

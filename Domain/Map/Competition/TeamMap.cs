@@ -1,8 +1,8 @@
-using champi.Domain.Entity;
+using champi.Domain.Entity.Competition;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace champi.Domain.Map
+namespace champi.Domain.Map.Competition
 {
     public class TeamMap : IEntityTypeConfiguration<Team>
     {
