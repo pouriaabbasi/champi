@@ -13,6 +13,7 @@
   <link href="assets/css/rtl/bootstrap.min.css" rel="stylesheet">
   <link href="assets/css/rtl/bootstrap.rtl.css" rel="stylesheet">
   <link href="assets/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+  <link href="assets/css/plugins/dataTables.bootstrap.css" rel="stylesheet">
   <link href="assets/css/plugins/timeline.css" rel="stylesheet">
   <link href="assets/css/rtl/sb-admin-2.css" rel="stylesheet">
   <link href="assets/css/plugins/morris.css" rel="stylesheet">
@@ -28,6 +29,13 @@
   <script src="assets/js/raphael/raphael.min.js"></script>
   <script src="assets/js/morris/morris.min.js"></script>
   <script src="assets/js/sb-admin-2.js"></script>
+  <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
+  <script src="assets/js/bootstrap/dataTables.bootstrap.min.js"></script>
+  <script>
+      $(document).ready(function () {
+        $('#gameTypesTable').dataTable();
+      });
+    </script>
 </body>
 
 </html>
