@@ -1,4 +1,6 @@
 <div id="wrapper">
+
+    <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -7,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand">به چمپی خوش آمدید</a>
+            <a class="navbar-brand" [routerLink]="['']" routerLinkActive="">به چمپی خوش آمدید!</a>
         </div>
 
         <div class="navbar-default sidebar" role="navigation">
@@ -25,14 +27,22 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a class="active"><i class="fa fa-dashboard fa-fw"></i> داشبورد</a>
+                        <a [routerLink]="['/dashboard']" routerLinkActive="active"><i class="fa fa-dashboard fa-fw"></i>
+                            داشبورد</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> تنظیمات<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a [routerLink]="['/game-type']" routerLinkActive="active">نوع بازی</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
         </div>
-
-        <div class="page-wrapper">
-            <router-outlet></router-outlet>
-        </div>
     </nav>
+    <div id="page-wrapper">
+        <router-outlet></router-outlet>
+    </div>
 </div>
