@@ -53,11 +53,11 @@ export class GameTypeModalComponent extends BasePage implements OnInit {
   }
 
   private updateGameType() {
-    const addGameTypeModel: UpdateGameTypeModel = {
+    const updateGameTypeModel: UpdateGameTypeModel = {
       name: this.gameType.name
     };
     this.gameTypeService
-      .updateGameType(this.gameType.id, addGameTypeModel)
+      .updateGameType(this.gameType.id, updateGameTypeModel)
       .subscribe(() => {
         this.showSuccess('Game Type updated successfuly', 'Update Game Type');
         this.bsModalRef.hide();

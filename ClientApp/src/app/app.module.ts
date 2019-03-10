@@ -24,6 +24,10 @@ import { GameTypesComponent } from "./pages/game-types/game-types.component";
 import { HttpClientModule } from "@angular/common/http";
 import { GameTypeModalComponent } from "./pages/game-types/game-type-modal/game-type-modal.component";
 import { ConfirmComponent } from "./components/confirm/confirm.component";
+import { CompetitionsComponent } from "./pages/competitions/competitions.component";
+import { TeamsComponent } from "./pages/teams/teams.component";
+import { CompetitionModalComponent } from "./pages/competitions/competition-modal/competition-modal.component";
+import { TeamModalComponent } from './pages/teams/team-modal/team-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import { ConfirmComponent } from "./components/confirm/confirm.component";
     NotificationsComponent,
     GameTypesComponent,
     GameTypeModalComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    CompetitionsComponent,
+    TeamsComponent,
+    CompetitionModalComponent,
+    TeamModalComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +62,11 @@ import { ConfirmComponent } from "./components/confirm/confirm.component";
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmComponent, GameTypeModalComponent]
+  entryComponents: [
+    ConfirmComponent,
+    GameTypeModalComponent,
+    TeamModalComponent,
+    CompetitionModalComponent
+  ]
 })
 export class AppModule {}

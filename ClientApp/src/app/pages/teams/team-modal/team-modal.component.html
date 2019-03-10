@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Team Information</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <label for="">Name: </label>
+    <input type="text" placeholder="Enter Name" class="form-control" [(ngModel)]="team.name">
+  </div>
+  <div class="form-group">
+    <label for="">Abbreviation Name: </label>
+    <input type="text" placeholder="Enter Abbreviation Name" class="form-control" [(ngModel)]="team.abbreviationName">
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" (click)="submit()">Submit</button>
+  <button class="btn btn-danger" (click)="close()">Close</button>
+</div>
