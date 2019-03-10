@@ -23,6 +23,7 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
 import { GameTypesComponent } from './pages/game-types/game-types.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GameTypeModalComponent } from './pages/game-types/game-type-modal/game-type-modal.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { GameTypeModalComponent } from './pages/game-types/game-type-modal/game-
     MapsComponent,
     NotificationsComponent,
     GameTypesComponent,
-    GameTypeModalComponent
+    GameTypeModalComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

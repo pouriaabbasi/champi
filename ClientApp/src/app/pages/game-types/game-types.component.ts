@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { GameTypeService } from 'src/app/services/game-type.service';
-import { GameTypeModel } from 'src/app/models/game-type/game-type.model';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { GameTypeModalComponent } from './game-type-modal/game-type-modal.component';
+import { Component, OnInit } from "@angular/core";
+import { GameTypeService } from "src/app/services/game-type.service";
+import { GameTypeModel } from "src/app/models/game-type/game-type.model";
+import { BsModalService } from "ngx-bootstrap/modal";
+import { GameTypeModalComponent } from "./game-type-modal/game-type-modal.component";
+import { BasePage } from "../base/base-page";
 
 @Component({
-  selector: 'app-game-types',
-  templateUrl: './game-types.component.html',
-  styleUrls: ['./game-types.component.scss']
+  selector: "app-game-types",
+  templateUrl: "./game-types.component.html",
+  styleUrls: ["./game-types.component.scss"]
 })
-export class GameTypesComponent implements OnInit {
-
+export class GameTypesComponent extends BasePage implements OnInit {
   gameTypes: GameTypeModel[] = [];
 
   constructor(
-    private modalService: BsModalService,
+    protected modalService: BsModalService,
     private gameTypeService: GameTypeService
-  ) { }
+  ) {
+    super(modalService);
+  }
 
   ngOnInit() {
     this.fetchData();
@@ -26,7 +28,9 @@ export class GameTypesComponent implements OnInit {
     const initialState = {
       gameType: new GameTypeModel()
     };
-    const bsModalRef = this.modalService.show(GameTypeModalComponent, { initialState });
+    const bsModalRef = this.modalService.show(GameTypeModalComponent, {
+      initialState
+    });
     bsModalRef.content.onClose.subscribe((result: boolean) => {
       if (result) {
         this.fetchData();
@@ -38,7 +42,9 @@ export class GameTypesComponent implements OnInit {
     const initialState = {
       gameType: gameType
     };
-    const bsModalRef = this.modalService.show(GameTypeModalComponent, { initialState });
+    const bsModalRef = this.modalService.show(GameTypeModalComponent, {
+      initialState
+    });
     bsModalRef.content.onClose.subscribe((result: boolean) => {
       if (result) {
         this.fetchData();
@@ -47,10 +53,8 @@ export class GameTypesComponent implements OnInit {
   }
 
   private fetchData(): void {
-    this.gameTypeService.getGameTypes()
-      .subscribe(gameTypes => {
-        this.gameTypes = gameTypes;
-      });
+    this.gameTypeService.getGameTypes().subscribe(gameTypes => {
+      this.gameTypes = gameTypes;
+    });
   }
-
 }

@@ -1,28 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { GameTypeModel } from 'src/app/models/game-type/game-type.model';
-import { Subject } from 'rxjs';
-import { GameTypeService } from 'src/app/services/game-type.service';
-import { AddGameTypeModel } from 'src/app/models/game-type/add-game-type-model';
-import { UpdateGameTypeModel } from 'src/app/models/game-type/update-game-type.model';
+import { Component, OnInit } from "@angular/core";
+import { BsModalRef } from "ngx-bootstrap/modal";
+import { GameTypeModel } from "src/app/models/game-type/game-type.model";
+import { Subject } from "rxjs";
+import { GameTypeService } from "src/app/services/game-type.service";
+import { AddGameTypeModel } from "src/app/models/game-type/add-game-type-model";
+import { UpdateGameTypeModel } from "src/app/models/game-type/update-game-type.model";
+import { ChildBasePage } from "../../base/child-base-page";
 
 @Component({
-  selector: 'app-game-type-modal',
-  templateUrl: './game-type-modal.component.html',
-  styleUrls: ['./game-type-modal.component.scss']
+  selector: "app-game-type-modal",
+  templateUrl: "./game-type-modal.component.html",
+  styleUrls: ["./game-type-modal.component.scss"]
 })
-export class GameTypeModalComponent implements OnInit {
-
-  public onClose: Subject<boolean>;
+export class GameTypeModalComponent extends ChildBasePage implements OnInit {
   gameType: GameTypeModel;
 
   constructor(
     private bsModalRef: BsModalRef,
     private gameTypeService: GameTypeService
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
-    this.onClose = new Subject();
+    super.ngOnInit();
   }
 
   public close() {
@@ -42,12 +43,10 @@ export class GameTypeModalComponent implements OnInit {
     const addGameTypeModel: AddGameTypeModel = {
       name: this.gameType.name
     };
-    this.gameTypeService
-      .addGameType(addGameTypeModel)
-      .subscribe(() => {
-        this.bsModalRef.hide();
-        this.onClose.next(true);
-      });
+    this.gameTypeService.addGameType(addGameTypeModel).subscribe(() => {
+      this.bsModalRef.hide();
+      this.onClose.next(true);
+    });
   }
 
   private updateGameType() {
@@ -61,5 +60,4 @@ export class GameTypeModalComponent implements OnInit {
         this.onClose.next(true);
       });
   }
-
 }
