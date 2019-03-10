@@ -1,11 +1,11 @@
 <div>
-  <h4 class="text-muted mb-4">Game Types </h4>
+  <h4 class="text-muted mb-4">Teams </h4>
   <div class="row mb-4">
     <div class="col-md-12">
       <div class="card border-0 rounded-0">
         <div class="card-body">
           <div class="card-title mb-4">
-            <button class="btn btn-success" (click)="addGameType()"><i class="fa fa-plus-circle"></i>New Game Type</button>
+            <button class="btn btn-success" (click)="addTeam()"><i class="fa fa-plus-circle"></i>New Team</button>
           </div>
           <div class="table-responsive-md">
             <table class="table table-hover table-striped">
@@ -13,18 +13,20 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Abbreviation Name</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let gameType of gameTypes;let i=index">
+                <tr *ngFor="let team of teams;let i=index">
                   <td scope="row">{{i+1}}</td>
-                  <td>{{gameType.name}}</td>
+                  <td>{{team.name}}</td>
+                  <td>{{team.abbreviationName}}</td>
                   <td>
-                    <a class="btn btn-sm btn-success rounded-0 mr-2" (click)="updateGameType(gameType)">
+                    <a class="btn btn-sm btn-success rounded-0 mr-2" (click)="updateTean(team)">
                       <i class="fa fa-pencil"></i>
                     </a>
-                    <a class="btn btn-sm btn-danger rounded-0" (click)="deleteGameType(gameType)">
+                    <a class="btn btn-sm btn-danger rounded-0" (click)="deleteTeam(team)">
                       <i class="fa fa-close"></i>
                     </a>
                   </td>

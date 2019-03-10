@@ -38,4 +38,12 @@ export class BaseService {
         map(result => result.data)
       );
   }
+
+  protected delete<T>(url: string): Observable<T> {
+    return this.http
+      .delete<BaseResultModel<T>>(`${this.baseUrl}${url}`)
+      .pipe(
+        map(result => result.data)
+      );
+  }
 }

@@ -1,22 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { GameTypeService } from 'src/app/services/game-type.service';
-import { GameTypeModel } from 'src/app/models/game-type/game-type.model';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { GameTypeModalComponent } from './game-type-modal/game-type-modal.component';
+import { Component, OnInit } from "@angular/core";
+import { GameTypeService } from "src/app/services/game-type.service";
+import { GameTypeModel } from "src/app/models/game-type/game-type.model";
+import { BsModalService } from "ngx-bootstrap/modal";
+import { GameTypeModalComponent } from "./game-type-modal/game-type-modal.component";
+import { BasePage } from "../base/base-page";
+import { AppService } from "src/app/services/app.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-game-types',
-  templateUrl: './game-types.component.html',
-  styleUrls: ['./game-types.component.scss']
+  selector: "app-game-types",
+  templateUrl: "./game-types.component.html",
+  styleUrls: ["./game-types.component.scss"]
 })
-export class GameTypesComponent implements OnInit {
-
+export class GameTypesComponent extends BasePage implements OnInit {
   gameTypes: GameTypeModel[] = [];
 
   constructor(
-    private modalService: BsModalService,
+    protected modalService: BsModalService,
+    protected toastrService: ToastrService,
     private gameTypeService: GameTypeService
-  ) { }
+  ) {
+    super(modalService, toastrService);
+  }
 
   ngOnInit() {
     this.fetchData();
@@ -26,7 +31,9 @@ export class GameTypesComponent implements OnInit {
     const initialState = {
       gameType: new GameTypeModel()
     };
-    const bsModalRef = this.modalService.show(GameTypeModalComponent, { initialState });
+    const bsModalRef = this.modalService.show(GameTypeModalComponent, {
+      initialState
+    });
     bsModalRef.content.onClose.subscribe((result: boolean) => {
       if (result) {
         this.fetchData();
@@ -36,9 +43,11 @@ export class GameTypesComponent implements OnInit {
 
   public updateGameType(gameType: GameTypeModel) {
     const initialState = {
-      gameType: gameType
+      gameType: {...gameType}
     };
-    const bsModalRef = this.modalService.show(GameTypeModalComponent, { initialState });
+    const bsModalRef = this.modalService.show(GameTypeModalComponent, {
+      initialState
+    });
     bsModalRef.content.onClose.subscribe((result: boolean) => {
       if (result) {
         this.fetchData();
@@ -46,11 +55,24 @@ export class GameTypesComponent implements OnInit {
     });
   }
 
-  private fetchData(): void {
-    this.gameTypeService.getGameTypes()
-      .subscribe(gameTypes => {
-        this.gameTypes = gameTypes;
-      });
+  public deleteGameType(gameType: GameTypeModel) {
+    this.showConfirm(`Are you sure to delete '${gameType.name}' ?`).subscribe(
+      result => {
+        if (result) {
+          this.gameTypeService.deleteGameType(gameType.id).subscribe(result => {
+            if (result) {
+              this.showSuccess('Game Type deleted successfuly', 'Delete Game Type');
+              this.fetchData();
+            }
+          });
+        }
+      }
+    );
   }
 
+  private fetchData(): void {
+    this.gameTypeService.getGameTypes().subscribe(gameTypes => {
+      this.gameTypes = gameTypes;
+    });
+  }
 }

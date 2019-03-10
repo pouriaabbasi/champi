@@ -7,11 +7,15 @@ import { TypographyComponent } from './pages/typography/typography.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { GameTypesComponent } from './pages/game-types/game-types.component';
+import { TeamsComponent } from './pages/teams/teams.component';
+import { CompetitionsComponent } from './pages/competitions/competitions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'game-types', component: GameTypesComponent },
+  { path: 'teams', component: TeamsComponent },
+  { path: 'competitions', component: CompetitionsComponent },
 
   { path: 'forms', component: FormsComponent },
   { path: 'tables', component: TablesComponent },

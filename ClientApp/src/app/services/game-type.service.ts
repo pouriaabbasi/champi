@@ -28,4 +28,8 @@ export class GameTypeService extends BaseService {
   public updateGameType(id: number, model: UpdateGameTypeModel): Observable<GameTypeModel> {
     return super.put(`GameType/UpdateGameType/${id}`, model);
   }
+
+  public deleteGameType(id:number):Observable<boolean>{
+    return super.delete(`GameType/DeleteGameType/${id}`);
+  }
 }
