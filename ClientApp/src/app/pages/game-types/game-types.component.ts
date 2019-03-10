@@ -4,6 +4,7 @@ import { GameTypeModel } from "src/app/models/game-type/game-type.model";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { GameTypeModalComponent } from "./game-type-modal/game-type-modal.component";
 import { BasePage } from "../base/base-page";
+import { AppService } from "src/app/services/app.service";
 
 @Component({
   selector: "app-game-types",
@@ -15,7 +16,8 @@ export class GameTypesComponent extends BasePage implements OnInit {
 
   constructor(
     protected modalService: BsModalService,
-    private gameTypeService: GameTypeService
+    private gameTypeService: GameTypeService,
+    private appService: AppService
   ) {
     super(modalService);
   }
@@ -50,6 +52,20 @@ export class GameTypesComponent extends BasePage implements OnInit {
         this.fetchData();
       }
     });
+  }
+
+  public deleteGameType(gameType: GameTypeModel) {
+    this.appService
+      .showConfirm(`Are you sure to delete '${gameType.name}' ?`)
+      .subscribe(result => {
+        if (result) {
+          this.gameTypeService.deleteGameType(gameType.id).subscribe(result => {
+            if (result) {
+              this.fetchData();
+            }
+          });
+        }
+      });
   }
 
   private fetchData(): void {
