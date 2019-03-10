@@ -1,23 +1,20 @@
 import { Component, OnInit } from "@angular/core";
-import { ChildBasePage } from "src/app/pages/base/child-base-page";
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef } from "ngx-bootstrap/modal";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-confirm",
   templateUrl: "./confirm.component.html",
   styleUrls: ["./confirm.component.scss"]
 })
-export class ConfirmComponent extends ChildBasePage implements OnInit {
+export class ConfirmComponent implements OnInit {
+  onClose: Subject<boolean>;
   message: string;
 
-  constructor(
-    private bsModalRef: BsModalRef
-  ) {
-    super();
-  }
+  constructor(private bsModalRef: BsModalRef) {}
 
   ngOnInit() {
-    super.ngOnInit();
+    this.onClose = new Subject();
   }
 
   public confirm() {
@@ -25,7 +22,7 @@ export class ConfirmComponent extends ChildBasePage implements OnInit {
     this.onClose.next(true);
   }
 
-  public decline(){
+  public decline() {
     this.bsModalRef.hide();
     this.onClose.next(false);
   }

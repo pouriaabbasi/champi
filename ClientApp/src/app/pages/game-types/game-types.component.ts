@@ -5,6 +5,7 @@ import { BsModalService } from "ngx-bootstrap/modal";
 import { GameTypeModalComponent } from "./game-type-modal/game-type-modal.component";
 import { BasePage } from "../base/base-page";
 import { AppService } from "src/app/services/app.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-game-types",
@@ -16,10 +17,10 @@ export class GameTypesComponent extends BasePage implements OnInit {
 
   constructor(
     protected modalService: BsModalService,
-    private gameTypeService: GameTypeService,
-    private appService: AppService
+    protected toastrService: ToastrService,
+    private gameTypeService: GameTypeService
   ) {
-    super(modalService);
+    super(modalService, toastrService);
   }
 
   ngOnInit() {
@@ -42,7 +43,7 @@ export class GameTypesComponent extends BasePage implements OnInit {
 
   public updateGameType(gameType: GameTypeModel) {
     const initialState = {
-      gameType: gameType
+      gameType: {...gameType}
     };
     const bsModalRef = this.modalService.show(GameTypeModalComponent, {
       initialState
@@ -55,17 +56,18 @@ export class GameTypesComponent extends BasePage implements OnInit {
   }
 
   public deleteGameType(gameType: GameTypeModel) {
-    this.appService
-      .showConfirm(`Are you sure to delete '${gameType.name}' ?`)
-      .subscribe(result => {
+    this.showConfirm(`Are you sure to delete '${gameType.name}' ?`).subscribe(
+      result => {
         if (result) {
           this.gameTypeService.deleteGameType(gameType.id).subscribe(result => {
             if (result) {
+              this.showSuccess('Game Type deleted successfuly', 'Delete Game Type');
               this.fetchData();
             }
           });
         }
-      });
+      }
+    );
   }
 
   private fetchData(): void {
