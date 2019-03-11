@@ -67,6 +67,12 @@ export class CompetitionModalComponent extends BasePage implements OnInit {
 
   private updateCompetition() {
     const updateCompetitionModel: UpdateCompetitionModel = {
+      endDate: this.competition.endDate,
+      gameTypeId: this.competition.gameTypeId,
+      isCompleted: this.competition.isCompleted,
+      isStarted: this.competition.isStarted,
+      name: this.competition.name,
+      startDate: this.competition.startDate
     };
     this.competitionService
       .updateCompetition(this.competition.id, updateCompetitionModel)
