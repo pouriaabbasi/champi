@@ -5,6 +5,7 @@ namespace champi.Libs.Contracts
 {
     public interface ICompetitionLib
     {
-         List<CompetitionModel> GetCompetitions();
+        List<CompetitionModel> GetCompetitions();
+        CompetitionModel AddCompetition(AddCompetitionModel model);
     }
 }

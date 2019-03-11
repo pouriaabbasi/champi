@@ -4,7 +4,6 @@ import { GameTypeModel } from "src/app/models/game-type/game-type.model";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { GameTypeModalComponent } from "./game-type-modal/game-type-modal.component";
 import { BasePage } from "../base/base-page";
-import { AppService } from "src/app/services/app.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -43,7 +42,7 @@ export class GameTypesComponent extends BasePage implements OnInit {
 
   public updateGameType(gameType: GameTypeModel) {
     const initialState = {
-      gameType: {...gameType}
+      gameType: { ...gameType }
     };
     const bsModalRef = this.modalService.show(GameTypeModalComponent, {
       initialState

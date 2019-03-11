@@ -1,6 +1,7 @@
 using System;
 using champi.Controllers.Base;
 using champi.Libs.Contracts;
+using champi.Models.Competition;
 using champi.Models.Team;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,21 +47,21 @@ namespace champi.Controllers
         //     }
         // }
 
-        // [HttpPost]
-        // public IActionResult AddTeam([FromBody] AddTeamModel model)
-        // {
-        //     try
-        //     {
-        //         if (!ModelState.IsValid) return CustomError(ModelState);
+        [HttpPost]
+        public IActionResult AddCompetition([FromBody] AddCompetitionModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return CustomError(ModelState);
 
-        //         var result = teamLib.AddTeam(model);
-        //         return CustomResult(result);
-        //     }
-        //     catch (Exception exp)
-        //     {
-        //         return CustomError(exp);
-        //     }
-        // }
+                var result = competitionLib.AddCompetition(model);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
 
         // [HttpPut("{teamId}")]
         // public IActionResult UpdateTeam(long teamId, [FromBody] UpdateTeamModel model)

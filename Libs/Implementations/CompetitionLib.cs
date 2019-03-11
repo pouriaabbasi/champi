@@ -20,6 +20,7 @@ namespace champi.Libs.Implementations
             this.unitOfWork = unitOfWork;
             this.competitionRepo = competitionRepo;
         }
+
         public List<CompetitionModel> GetCompetitions()
         {
             var result =
@@ -29,13 +30,66 @@ namespace champi.Libs.Implementations
                     {
                         EndDate = x.EndDate,
                         GameTypeId = x.GameTypeId,
-                        GameTypeName = x.GameType.Name,
+                        // GameTypeName = x.GameType.Name,
                         Id = x.Id,
                         StartDate = x.StartDate,
                         TeamCount = x.TeamCount,
+                        ChampionTeamId = x.ChampionTeamId,
+                        // ChampionTeamName = x.ChampionTeam == null ? string.Empty : x.ChampionTeam.Name,
+                        IsCompleted = x.IsCompleted,
+                        IsStarted = x.IsStarted,
+                        Iteration = x.Iteration,
+                        Name = x.Name
                     });
 
             return result.ToList();
+        }
+
+        public CompetitionModel AddCompetition(AddCompetitionModel model)
+        {
+            var entity = new Competition
+            {
+                EndDate = model.EndDate,
+                GameTypeId = model.GameTypeId,
+                IsCompleted = model.IsCompleted,
+                IsStarted = model.IsStarted,
+                Iteration = CalculateIteration(model.Name, model.GameTypeId),
+                Name = model.Name,
+                StartDate = model.StartDate
+            };
+
+            competitionRepo.Add(entity);
+            unitOfWork.Commit();
+
+            return MapEntityToModel(entity);
+        }
+
+        private int CalculateIteration(string name, long gameTypeId)
+        {
+            var count =
+                competitionRepo
+                    .GetAll()
+                    .Count(x =>
+                        x.Name == name
+                        && x.GameTypeId == gameTypeId);
+            return ++count;
+        }
+
+        private CompetitionModel MapEntityToModel(Competition entity)
+        {
+            return new CompetitionModel
+            {
+                ChampionTeamId = entity.ChampionTeamId,
+                EndDate = entity.EndDate,
+                GameTypeId = entity.GameTypeId,
+                Id = entity.Id,
+                IsCompleted = entity.IsCompleted,
+                IsStarted = entity.IsStarted,
+                Iteration = entity.Iteration,
+                Name = entity.Name,
+                StartDate = entity.StartDate,
+                TeamCount = entity.TeamCount
+            };
         }
     }
 }

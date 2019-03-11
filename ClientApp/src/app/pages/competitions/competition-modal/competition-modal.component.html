@@ -1,3 +1,39 @@
-<p>
-  competition-modal works!
-</p>
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Competition Information</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <label for="">Name: </label>
+    <input type="text" placeholder="Enter Name" class="form-control" [(ngModel)]="competition.name">
+  </div>
+  <div class="form-group">
+    <label for="">Game Type: </label>
+    <select name="" id="" class="form-control" placeholder="Select Game Type" [(ngModel)]="competition.gameTypeId">
+      <option *ngFor="let gameType of gameTypes" value="{{gameType.key}}">{{gameType.caption}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Start Date: </label>
+    <input type="text" placeholder="Enter Start Date" class="form-control" bsDatepicker
+      [(ngModel)]="competition.startDate">
+  </div>
+  <div class="form-group">
+    <label>End Date: </label>
+    <input type="text" placeholder="Enter End Date" class="form-control" bsDatepicker [(ngModel)]="competition.endDate">
+  </div>
+  <div class="form-group">
+    <label>Is Started: </label>
+    <input type="checkbox" class="form-control" [(ngModel)]="competition.isStarted">
+  </div>
+  <div class="form-group">
+    <label>Is Completed: </label>
+    <input type="checkbox" class="form-control" [(ngModel)]="competition.isCompleted">
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" (click)="submit()">Submit</button>
+  <button class="btn btn-danger" (click)="close()">Close</button>
+</div>

@@ -16,8 +16,8 @@ namespace champi.Domain.Entity.Competition
         public bool IsCompleted { get; set; }
         public long? ChampionTeamId { get; set; }
 
-        public Team ChampionTeam { get; set; }
-        public GameType GameType {get;set;}
+        public virtual Team ChampionTeam { get; set; }
+        public virtual GameType GameType { get; set; }
 
         public ICollection<CompetitionStep> CompetitionSteps { get; set; }
         public ICollection<CompetitionTeam> CompetitionTeams { get; set; }
