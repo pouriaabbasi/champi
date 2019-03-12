@@ -29,7 +29,7 @@ import { CompetitionsComponent } from './pages/competitions/competitions.compone
 import { TeamsComponent } from './pages/teams/teams.component';
 import { CompetitionModalComponent } from './pages/competitions/competition-modal/competition-modal.component';
 import { TeamModalComponent } from './pages/teams/team-modal/team-modal.component';
-import { UiSwitchModule } from 'angular2-ui-switch'
+import { UiSwitchModule } from 'angular2-ui-switch';
 
 @NgModule({
   declarations: [

@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { BasePage } from "../base/base-page";
-import { BsModalService } from "ngx-bootstrap/modal";
-import { ToastrService } from "ngx-toastr";
-import { CompetitionModel } from "src/app/models/competition/competition.model";
-import { CompetitionService } from "src/app/services/competition.service";
-import { CompetitionModalComponent } from "./competition-modal/competition-modal.component";
+import { Component, OnInit } from '@angular/core';
+import { BasePage } from '../base/base-page';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { CompetitionModel } from 'src/app/models/competition/competition.model';
+import { CompetitionService } from 'src/app/services/competition.service';
+import { CompetitionModalComponent } from './competition-modal/competition-modal.component';
 
 @Component({
-  selector: "app-competitions",
-  templateUrl: "./competitions.component.html",
-  styleUrls: ["./competitions.component.scss"]
+  selector: 'app-competitions',
+  templateUrl: './competitions.component.html',
+  styleUrls: ['./competitions.component.scss']
 })
 export class CompetitionsComponent extends BasePage implements OnInit {
   competitions: CompetitionModel[] = [];

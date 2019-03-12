@@ -38,13 +38,14 @@
                                     <td>{{competition.isCompleted}}</td>
                                     <td>{{competition.championTeamName}}</td>
                                     <td>
-                                        <a class="btn btn-sm btn-success rounded-0 mr-2"
-                                            (click)="updateCompetition(competition)">
+                                        <a class="btn btn-sm btn-success m-1" (click)="updateCompetition(competition)">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a class="btn btn-sm btn-danger rounded-0"
-                                            (click)="deleteCompetition(competition)">
+                                        <a class="btn btn-sm btn-danger m-1" (click)="deleteCompetition(competition)">
                                             <i class="fa fa-close"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-info m-1" (click)="deleteCompetition(competition)">
+                                            Teams
                                         </a>
                                     </td>
                                 </tr>

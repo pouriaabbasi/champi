@@ -7,6 +7,7 @@ namespace champi.Libs.Contracts
     {
         List<CompetitionModel> GetCompetitions();
         CompetitionModel AddCompetition(AddCompetitionModel model);
-        CompetitionModel UpdateCompetition(UpdateCompetitionModel model);
+        CompetitionModel UpdateCompetition(long competitionId, UpdateCompetitionModel model);
+        bool DeleteCompetition(long competitionId);
     }
 }

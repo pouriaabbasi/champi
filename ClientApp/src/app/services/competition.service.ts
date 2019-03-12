@@ -29,7 +29,7 @@ export class CompetitionService extends BaseService {
     return super.put(`Competition/UpdateCompetition/${id}`, model);
   }
 
-  public deleteCompetition(id:number):Observable<boolean>{
-    return super.delete(`Competition/UpdateCompetition/${id}`);
+  public deleteCompetition(id: number): Observable<boolean> {
+    return super.delete(`Competition/DeleteCompetition/${id}`);
   }
 }

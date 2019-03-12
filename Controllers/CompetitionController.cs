@@ -63,32 +63,32 @@ namespace champi.Controllers
             }
         }
 
-        // [HttpPut("{teamId}")]
-        // public IActionResult UpdateTeam(long teamId, [FromBody] UpdateTeamModel model)
-        // {
-        //     try
-        //     {
-        //         var result = teamLib.UpdateTeam(teamId, model);
-        //         return CustomResult(result);
-        //     }
-        //     catch (Exception exp)
-        //     {
-        //         return CustomError(exp);
-        //     }
-        // }
+        [HttpPut("{competitionId}")]
+        public IActionResult UpdateCompetition(long competitionId, [FromBody] UpdateCompetitionModel model)
+        {
+            try
+            {
+                var result = competitionLib.UpdateCompetition(competitionId, model);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
 
-        // [HttpDelete("{teamId}")]
-        // public IActionResult DeleteTeam(long teamId)
-        // {
-        //     try
-        //     {
-        //         var result = teamLib.DeleteTeam(teamId);
-        //         return CustomResult(result);
-        //     }
-        //     catch (Exception exp)
-        //     {
-        //         return CustomError(exp);
-        //     }
-        // }
+        [HttpDelete("{competitionId}")]
+        public IActionResult DeleteCompetition(long competitionId)
+        {
+            try
+            {
+                var result = competitionLib.DeleteCompetition(competitionId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
     }
 }
