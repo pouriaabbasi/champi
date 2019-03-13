@@ -30,6 +30,8 @@ import { TeamsComponent } from './pages/teams/teams.component';
 import { CompetitionModalComponent } from './pages/competitions/competition-modal/competition-modal.component';
 import { TeamModalComponent } from './pages/teams/team-modal/team-modal.component';
 import { UiSwitchModule } from 'angular2-ui-switch';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { CompetitionTeamsModalComponent } from './pages/competitions/competition-teams-modal/competition-teams-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { UiSwitchModule } from 'angular2-ui-switch';
     CompetitionsComponent,
     TeamsComponent,
     CompetitionModalComponent,
-    TeamModalComponent
+    TeamModalComponent,
+    CompetitionTeamsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import { UiSwitchModule } from 'angular2-ui-switch';
     HttpClientModule,
     FormsModule,
     UiSwitchModule,
+    MultiselectDropdownModule,
     CollapseModule.forRoot(),
     ToastrModule.forRoot(),
     ModalModule.forRoot(),
@@ -70,7 +74,8 @@ import { UiSwitchModule } from 'angular2-ui-switch';
     ConfirmComponent,
     GameTypeModalComponent,
     TeamModalComponent,
-    CompetitionModalComponent
+    CompetitionModalComponent,
+    CompetitionTeamsModalComponent
   ]
 })
 export class AppModule { }

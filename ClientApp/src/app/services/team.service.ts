@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { TeamModel } from "../models/team/team.model";
 import { AddTeamModel } from "../models/team/add-team.model";
 import { UpdateTeamModel } from "../models/team/update-team.model";
+import { BaseSelectinoModel } from "../models/base/base-selection.model";
 
 @Injectable({
   providedIn: "root"
@@ -16,6 +17,10 @@ export class TeamService extends BaseService {
 
   public getTeams(): Observable<TeamModel[]> {
     return super.get("Team/GetTeams");
+  }
+
+  public getTeamSelections(): Observable<BaseSelectinoModel[]> {
+    return this.get("Team/GetTeamSelections");
   }
 
   public addTeam(model: AddTeamModel): Observable<TeamModel> {
