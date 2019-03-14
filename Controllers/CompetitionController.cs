@@ -92,11 +92,11 @@ namespace champi.Controllers
         }
 
         [HttpPut("{competitionId}")]
-        public IActionResult UpdateCompetitionTeams(long competitionId, [FromBody]long[] teamsId)
+        public IActionResult UpdateCompetitionTeams(long competitionId, [FromBody]UpdateCompetitionTeamsModel model)
         {
             try
             {
-                var result = competitionLib.UpdateCompetitionTeams(competitionId, teamsId);
+                var result = competitionLib.UpdateCompetitionTeams(competitionId, model);
                 return CustomResult(result);
             }
             catch (Exception exp)

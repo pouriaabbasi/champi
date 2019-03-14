@@ -95,12 +95,12 @@ namespace champi.Libs.Implementations
             return MapEntityToModel(entity);
         }
 
-        public bool UpdateCompetitionTeams(long competitionId, long[] teamsId)
+        public bool UpdateCompetitionTeams(long competitionId, UpdateCompetitionTeamsModel model)
         {
             var competition = competitionRepo.FirstOrDefault(x => x.Id == competitionId);
             if (competition == null) throw new Exception("Item Not Found");
 
-            competition.TeamCount = teamsId.Length;
+            competition.TeamCount = model.TeamsId.Length;
 
             var competitionTeams =
                 competitionTeamRepo
@@ -110,7 +110,7 @@ namespace champi.Libs.Implementations
             foreach (var competitionTeam in competitionTeams)
                 competitionTeamRepo.Delete(competitionTeam);
 
-            foreach (var teamId in teamsId)
+            foreach (var teamId in model.TeamsId)
             {
                 competitionTeamRepo.Add(new CompetitionTeam
                 {

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CompetitionModel } from '../models/competition/competition.model';
 import { AddCompetitionModel } from '../models/competition/add-competition.model';
 import { UpdateCompetitionModel } from '../models/competition/update-competition.model';
+import { UpdateCompetitionTeamsModel } from '../models/competition/update-competition-teams.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class CompetitionService extends BaseService {
     return super.put(`Competition/UpdateCompetition/${id}`, model);
   }
 
-  public updateCompetitionTeams(id: number, model: number[]): Observable<boolean> {
+  public updateCompetitionTeams(id: number, model: UpdateCompetitionTeamsModel): Observable<boolean> {
     return super.put(`Competition/UpdateCompetitionTeams/${id}`, model);
   }
 

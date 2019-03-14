@@ -6,6 +6,7 @@ import { CompetitionModel } from 'src/app/models/competition/competition.model';
 import { CompetitionService } from 'src/app/services/competition.service';
 import { TeamService } from 'src/app/services/team.service';
 import { BaseSelectinoModel } from 'src/app/models/base/base-selection.model';
+import { UpdateCompetitionTeamsModel } from 'src/app/models/competition/update-competition-teams.model';
 
 @Component({
   selector: 'app-competition-teams-modal',
@@ -38,13 +39,16 @@ export class CompetitionTeamsModalComponent extends BasePage implements OnInit {
   }
 
   public submit() {
-    const selectedTeams: number[] = [];
+    const model: UpdateCompetitionTeamsModel = {
+      teamsId: []
+    };
+
     this.teamSelections.forEach(selection => {
       if (selection.selected) {
-        selectedTeams.push(selection.key);
+        model.teamsId.push(selection.key);
       }
     });
-    this.competitionService.updateCompetitionTeams(this.competition.id, selectedTeams)
+    this.competitionService.updateCompetitionTeams(this.competition.id, model)
       .subscribe(result => {
         if (result) {
           this.showSuccess('Competition Teams updated successfuly', 'Update Competition Teams');

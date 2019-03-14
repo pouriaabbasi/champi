@@ -9,7 +9,7 @@ namespace champi.Libs.Contracts
         List<long> GetCompetitionTeamsId(long competitionId);
         CompetitionModel AddCompetition(AddCompetitionModel model);
         CompetitionModel UpdateCompetition(long competitionId, UpdateCompetitionModel model);
-        bool UpdateCompetitionTeams(long competitionId, long[] teamsId);
+        bool UpdateCompetitionTeams(long competitionId, UpdateCompetitionTeamsModel model);
         bool DeleteCompetition(long competitionId);
     }
 }
