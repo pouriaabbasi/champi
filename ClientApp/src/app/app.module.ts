@@ -3,14 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ToastrModule } from 'ngx-toastr';
-import { BsDatepickerModule } from 'ngx-bootstrap';
-
+import { BsDatepickerModule, TypeaheadModule } from 'ngx-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -30,8 +27,8 @@ import { TeamsComponent } from './pages/teams/teams.component';
 import { CompetitionModalComponent } from './pages/competitions/competition-modal/competition-modal.component';
 import { TeamModalComponent } from './pages/teams/team-modal/team-modal.component';
 import { UiSwitchModule } from 'angular2-ui-switch';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { CompetitionTeamsModalComponent } from './pages/competitions/competition-teams-modal/competition-teams-modal.component';
+import { CompetitionStepsModalComponent } from './pages/competitions/competition-steps-modal/competition-steps-modal.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +49,8 @@ import { CompetitionTeamsModalComponent } from './pages/competitions/competition
     TeamsComponent,
     CompetitionModalComponent,
     TeamModalComponent,
-    CompetitionTeamsModalComponent
+    CompetitionTeamsModalComponent,
+    CompetitionStepsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -62,11 +60,11 @@ import { CompetitionTeamsModalComponent } from './pages/competitions/competition
     HttpClientModule,
     FormsModule,
     UiSwitchModule,
-    MultiselectDropdownModule,
     CollapseModule.forRoot(),
     ToastrModule.forRoot(),
     ModalModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TypeaheadModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -75,7 +73,8 @@ import { CompetitionTeamsModalComponent } from './pages/competitions/competition
     GameTypeModalComponent,
     TeamModalComponent,
     CompetitionModalComponent,
-    CompetitionTeamsModalComponent
+    CompetitionTeamsModalComponent,
+    CompetitionStepsModalComponent
   ]
 })
 export class AppModule { }

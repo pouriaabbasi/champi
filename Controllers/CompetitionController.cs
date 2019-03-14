@@ -33,6 +33,20 @@ namespace champi.Controllers
             }
         }
 
+        [HttpGet("{competitionId}")]
+        public IActionResult GetCompetitionTeamsId(long competitionId)
+        {
+            try
+            {
+                var result = competitionLib.GetCompetitionTeamsId(competitionId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
         // [HttpGet]
         // public IActionResult GetTeamSelections()
         // {
@@ -69,6 +83,20 @@ namespace champi.Controllers
             try
             {
                 var result = competitionLib.UpdateCompetition(competitionId, model);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
+        [HttpPut("{competitionId}")]
+        public IActionResult UpdateCompetitionTeams(long competitionId, [FromBody]long[] teamsId)
+        {
+            try
+            {
+                var result = competitionLib.UpdateCompetitionTeams(competitionId, teamsId);
                 return CustomResult(result);
             }
             catch (Exception exp)

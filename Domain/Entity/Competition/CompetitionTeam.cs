@@ -9,9 +9,9 @@ namespace champi.Domain.Entity.Competition
         public long CompetitionId { get; set; }
         public long TeamId { get; set; }
 
-        public Competition Competition { get; set; }
-        public Team Team { get; set; }
+        public virtual Competition Competition { get; set; }
+        public virtual Team Team { get; set; }
 
-        public ICollection<LeagueTeam> LeagueTeams { get; set; }
+        public virtual ICollection<LeagueTeam> LeagueTeams { get; set; }
     }
 }

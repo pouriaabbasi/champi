@@ -9,7 +9,7 @@ namespace champi.Domain.Entity.Competition
         public string AbbreviationName { get; set; }
         public string Logo { get; set; }
 
-        public ICollection<Competition> ChampionCompetitions { get; set; }
-        public ICollection<CompetitionTeam> CompetitionTeams { get; set; }
+        public virtual ICollection<Competition> ChampionCompetitions { get; set; }
+        public virtual ICollection<CompetitionTeam> CompetitionTeams { get; set; }
     }
 }

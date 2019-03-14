@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { BaseService } from "./base/base.service";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { TeamModel } from "../models/team/team.model";
-import { AddTeamModel } from "../models/team/add-team.model";
-import { UpdateTeamModel } from "../models/team/update-team.model";
-import { BaseSelectinoModel } from "../models/base/base-selection.model";
+import { Injectable } from '@angular/core';
+import { BaseService } from './base/base.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TeamModel } from '../models/team/team.model';
+import { AddTeamModel } from '../models/team/add-team.model';
+import { UpdateTeamModel } from '../models/team/update-team.model';
+import { BaseSelectinoModel } from '../models/base/base-selection.model';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class TeamService extends BaseService {
   constructor(protected http: HttpClient) {
@@ -16,15 +16,15 @@ export class TeamService extends BaseService {
   }
 
   public getTeams(): Observable<TeamModel[]> {
-    return super.get("Team/GetTeams");
+    return super.get('Team/GetTeams');
   }
 
   public getTeamSelections(): Observable<BaseSelectinoModel[]> {
-    return this.get("Team/GetTeamSelections");
+    return this.get('Team/GetTeamSelections');
   }
 
   public addTeam(model: AddTeamModel): Observable<TeamModel> {
-    return super.post("Team/AddTeam", model);
+    return super.post('Team/AddTeam', model);
   }
 
   public updateTeam(id: number, model: UpdateTeamModel): Observable<TeamModel> {

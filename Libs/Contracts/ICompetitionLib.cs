@@ -6,8 +6,10 @@ namespace champi.Libs.Contracts
     public interface ICompetitionLib
     {
         List<CompetitionModel> GetCompetitions();
+        List<long> GetCompetitionTeamsId(long competitionId);
         CompetitionModel AddCompetition(AddCompetitionModel model);
         CompetitionModel UpdateCompetition(long competitionId, UpdateCompetitionModel model);
+        bool UpdateCompetitionTeams(long competitionId, long[] teamsId);
         bool DeleteCompetition(long competitionId);
     }
 }

@@ -16,7 +16,7 @@ import { GameTypeService } from 'src/app/services/game-type.service';
 })
 export class CompetitionModalComponent extends BasePage implements OnInit {
   competition: CompetitionModel;
-  gameTypes: BaseSelectinoModel[];
+  gameTypes: BaseSelectinoModel[] = [];
 
   constructor(
     protected modalService: BsModalService,

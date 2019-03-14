@@ -1,6 +1,18 @@
-<p>
-  competition-teams-modal works!
-</p>
-<div class="form-group">
-<ss-multiselect-dropdown [options]="myOptions" [texts]="myTexts" [settings]="mySettings" [(ngModel)]="optionsModel"></ss-multiselect-dropdown>
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Competition Information</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <div class="form-control" *ngFor="let selection of teamSelections">
+      <ui-switch size="small" [(ngModel)]="selection.selected"></ui-switch>
+      <label>{{selection.caption}}</label>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" (click)="submit()">Submit</button>
+  <button class="btn btn-danger" (click)="close()">Close</button>
 </div>

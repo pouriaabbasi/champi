@@ -24,5 +24,11 @@ namespace champi.Context
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GameTypeMap).Assembly);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseLazyLoadingProxies();
+        }
     }
 }

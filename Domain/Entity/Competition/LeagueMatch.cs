@@ -12,8 +12,8 @@ namespace champi.Domain.Entity.Competition
         public long? WinnerTeamId { get; set; }
         public DateTime? MatchDate { get; set; }
 
-        public LeagueTeam FirstTeam { get; set; }
-        public LeagueTeam SecondTeam { get; set; }
-        public LeagueTeam WinnerTeam { get; set; }
+        public virtual LeagueTeam FirstTeam { get; set; }
+        public virtual LeagueTeam SecondTeam { get; set; }
+        public virtual LeagueTeam WinnerTeam { get; set; }
     }
 }

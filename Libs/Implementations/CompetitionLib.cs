@@ -12,14 +12,17 @@ namespace champi.Libs.Implementations
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IRepository<Competition> competitionRepo;
+        private readonly IRepository<CompetitionTeam> competitionTeamRepo;
 
         public CompetitionLib(
             IUnitOfWork unitOfWork,
-            IRepository<Competition> competitionRepo
+            IRepository<Competition> competitionRepo,
+            IRepository<CompetitionTeam> competitionTeamRepo
         )
         {
             this.unitOfWork = unitOfWork;
             this.competitionRepo = competitionRepo;
+            this.competitionTeamRepo = competitionTeamRepo;
         }
 
         public List<CompetitionModel> GetCompetitions()
@@ -31,12 +34,12 @@ namespace champi.Libs.Implementations
                     {
                         EndDate = x.EndDate,
                         GameTypeId = x.GameTypeId,
-                        // GameTypeName = x.GameType.Name,
+                        GameTypeName = x.GameType.Name,
                         Id = x.Id,
                         StartDate = x.StartDate,
                         TeamCount = x.TeamCount,
                         ChampionTeamId = x.ChampionTeamId,
-                        // ChampionTeamName = x.ChampionTeam == null ? string.Empty : x.ChampionTeam.Name,
+                        ChampionTeamName = x.ChampionTeam == null ? string.Empty : x.ChampionTeam.Name,
                         IsCompleted = x.IsCompleted,
                         IsStarted = x.IsStarted,
                         Iteration = x.Iteration,
@@ -46,6 +49,15 @@ namespace champi.Libs.Implementations
             return result.ToList();
         }
 
+        public List<long> GetCompetitionTeamsId(long competitionId)
+        {
+            var result =
+                competitionTeamRepo.GetAll()
+                    .Where(x => x.CompetitionId == competitionId)
+                    .Select(x => x.TeamId);
+
+            return result.ToList();
+        }
         public CompetitionModel AddCompetition(AddCompetitionModel model)
         {
             var entity = new Competition
@@ -63,6 +75,64 @@ namespace champi.Libs.Implementations
             unitOfWork.Commit();
 
             return MapEntityToModel(entity);
+        }
+
+        public CompetitionModel UpdateCompetition(long competitionId, UpdateCompetitionModel model)
+        {
+            var entity = competitionRepo.FirstOrDefault(x => x.Id == competitionId);
+            if (entity == null) throw new Exception("Item Not Found");
+
+            entity.Name = model.Name;
+            entity.EndDate = model.EndDate;
+            entity.GameTypeId = model.GameTypeId;
+            entity.IsCompleted = model.IsCompleted;
+            entity.IsStarted = model.IsStarted;
+            entity.Name = model.Name;
+            entity.StartDate = model.StartDate;
+
+            unitOfWork.Commit();
+
+            return MapEntityToModel(entity);
+        }
+
+        public bool UpdateCompetitionTeams(long competitionId, long[] teamsId)
+        {
+            var competition = competitionRepo.FirstOrDefault(x => x.Id == competitionId);
+            if (competition == null) throw new Exception("Item Not Found");
+
+            competition.TeamCount = teamsId.Length;
+
+            var competitionTeams =
+                competitionTeamRepo
+                    .GetAll()
+                    .Where(x => x.CompetitionId == competitionId);
+
+            foreach (var competitionTeam in competitionTeams)
+                competitionTeamRepo.Delete(competitionTeam);
+
+            foreach (var teamId in teamsId)
+            {
+                competitionTeamRepo.Add(new CompetitionTeam
+                {
+                    CompetitionId = competitionId,
+                    TeamId = teamId
+                });
+            }
+
+            unitOfWork.Commit();
+
+            return true;
+        }
+
+        public bool DeleteCompetition(long competitionId)
+        {
+            var entity = competitionRepo.FirstOrDefault(x => x.Id == competitionId);
+            if (entity == null) throw new Exception("Item Not Found");
+
+            competitionRepo.Delete(entity);
+            unitOfWork.Commit();
+
+            return true;
         }
 
         private int CalculateIteration(string name, long gameTypeId)
@@ -91,35 +161,6 @@ namespace champi.Libs.Implementations
                 StartDate = entity.StartDate,
                 TeamCount = entity.TeamCount
             };
-        }
-
-        public CompetitionModel UpdateCompetition(long competitionId, UpdateCompetitionModel model)
-        {
-            var entity = competitionRepo.FirstOrDefault(x => x.Id == competitionId);
-            if (entity == null) throw new Exception("Item Not Found");
-
-            entity.Name = model.Name;
-            entity.EndDate = model.EndDate;
-            entity.GameTypeId = model.GameTypeId;
-            entity.IsCompleted = model.IsCompleted;
-            entity.IsStarted = model.IsStarted;
-            entity.Name = model.Name;
-            entity.StartDate = model.StartDate;
-
-            unitOfWork.Commit();
-
-            return MapEntityToModel(entity);
-        }
-
-        public bool DeleteCompetition(long competitionId)
-        {
-            var entity = competitionRepo.FirstOrDefault(x => x.Id == competitionId);
-            if (entity == null) throw new Exception("Item Not Found");
-
-            competitionRepo.Delete(entity);
-            unitOfWork.Commit();
-
-            return true;
         }
     }
 }

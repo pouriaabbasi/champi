@@ -19,7 +19,7 @@ namespace champi.Domain.Entity.Competition
         public virtual Team ChampionTeam { get; set; }
         public virtual GameType GameType { get; set; }
 
-        public ICollection<CompetitionStep> CompetitionSteps { get; set; }
-        public ICollection<CompetitionTeam> CompetitionTeams { get; set; }
+        public virtual ICollection<CompetitionStep> CompetitionSteps { get; set; }
+        public virtual ICollection<CompetitionTeam> CompetitionTeams { get; set; }
     }
 }

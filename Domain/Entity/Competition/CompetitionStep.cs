@@ -15,8 +15,8 @@ namespace champi.Domain.Entity.Competition
         public bool IsStarted { get; set; }
         public bool IsCompleted { get; set; }
 
-        public Competition Competition { get; set; }
+        public virtual Competition Competition { get; set; }
 
-        public ICollection<League> Leagues { get; set; }
+        public virtual ICollection<League> Leagues { get; set; }
     }
 }

@@ -8,12 +8,12 @@ namespace champi.Domain.Entity.Competition
         public long LeagueId { get; set; }
         public long CompetitionTeamId { get; set; }
 
-        public League League { get; set; }
-        public CompetitionTeam CompetitionTeam { get; set; }
+        public virtual League League { get; set; }
+        public virtual CompetitionTeam CompetitionTeam { get; set; }
 
-        public ICollection<LeagueMatch> LeagueMatchesFirstTeam { get; set; }
-        public ICollection<LeagueMatch> LeagueMatchesSecondTeam { get; set; }
-        public ICollection<LeagueMatch> LeagueMatchesWinnerTeam { get; set; }
-        public ICollection<LeagueResult> LeagueResults { get; set; }
+        public virtual ICollection<LeagueMatch> LeagueMatchesFirstTeam { get; set; }
+        public virtual ICollection<LeagueMatch> LeagueMatchesSecondTeam { get; set; }
+        public virtual ICollection<LeagueMatch> LeagueMatchesWinnerTeam { get; set; }
+        public virtual ICollection<LeagueResult> LeagueResults { get; set; }
     }
 }

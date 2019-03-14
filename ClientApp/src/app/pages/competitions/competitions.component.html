@@ -15,12 +15,12 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Game Type Name</th>
-                                    <th scope="col">Iteration</th>
-                                    <th scope="col">Team Count</th>
+                                    <!-- <th scope="col">Iteration</th> -->
+                                    <!-- <th scope="col">Team Count</th> -->
                                     <th scope="col">Start Date</th>
                                     <th scope="col">End Date</th>
-                                    <th scope="col">Is Started</th>
-                                    <th scope="col">Is Completed</th>
+                                    <!-- <th scope="col">Is Started</th>
+                                    <th scope="col">Is Completed</th> -->
                                     <th scope="col">Champion Team Name</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -28,14 +28,14 @@
                             <tbody>
                                 <tr *ngFor="let competition of competitions;let i=index">
                                     <td scope="row">{{i+1}}</td>
-                                    <td>{{competition.name}}</td>
+                                    <td>{{competition.name}}[{{competition.iteration}}]</td>
                                     <td>{{competition.gameTypeName}}</td>
-                                    <td>{{competition.iteration}}</td>
-                                    <td>{{competition.teamCount}}</td>
+                                    <!-- <td>{{competition.iteration}}</td> -->
+                                    <!-- <td>{{competition.teamCount}}</td> -->
                                     <td>{{competition.startDatePersian}}</td>
                                     <td>{{competition.endDatePersian}}</td>
-                                    <td>{{competition.isStarted}}</td>
-                                    <td>{{competition.isCompleted}}</td>
+                                    <!-- <td>{{competition.isStarted?'Yes':'No'}}</td>
+                                    <td>{{competition.isCompleted?'Yes':'No'}}</td> -->
                                     <td>{{competition.championTeamName}}</td>
                                     <td>
                                         <a class="btn btn-sm btn-success m-1" (click)="updateCompetition(competition)">
@@ -44,8 +44,12 @@
                                         <a class="btn btn-sm btn-danger m-1" (click)="deleteCompetition(competition)">
                                             <i class="fa fa-close"></i>
                                         </a>
-                                        <a class="btn btn-sm btn-info m-1" (click)="selectCompetitionTeams(competition)">
-                                            Teams
+                                        <a class="btn btn-sm btn-info m-1"
+                                            (click)="selectCompetitionTeams(competition)">
+                                            <i class="fa fa-tasks"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-info m-1" (click)="setCompetitionSteps(competition)">
+                                            <i class="fa fa-cog"></i>
                                         </a>
                                     </td>
                                 </tr>

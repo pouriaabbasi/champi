@@ -10,7 +10,7 @@ namespace champi.Domain.Entity.Competition
         public LeagueResultTypeKind LeagueResultType { get; set; }
         public int Rank { get; set; }
 
-        public League League { get; set; }
-        public LeagueTeam LeagueTeam { get; set; }
+        public virtual League League { get; set; }
+        public virtual LeagueTeam LeagueTeam { get; set; }
     }
 }

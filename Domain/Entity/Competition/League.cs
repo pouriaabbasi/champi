@@ -12,9 +12,9 @@ namespace champi.Domain.Entity.Competition
         public int RiseTeamCount { get; set; }
         public int FallTeamCount { get; set; }
 
-        public CompetitionStep CompetitionStep { get; set; }
+        public virtual CompetitionStep CompetitionStep { get; set; }
 
-        public ICollection<LeagueTeam> LeagueTeams { get; set; }
-        public ICollection<LeagueResult> LeagueResults { get; set; }
+        public virtual ICollection<LeagueTeam> LeagueTeams { get; set; }
+        public virtual ICollection<LeagueResult> LeagueResults { get; set; }
     }
 }

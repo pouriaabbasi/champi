@@ -8,9 +8,9 @@ namespace champi.Domain.Entity.Competition
         public string Name { get; set; }
         public long? ParentGameTypeId { get; set; }
 
-        public GameType ParentGameType { get; set; }
+        public virtual GameType ParentGameType { get; set; }
 
-        public ICollection<GameType> ChildGameTypes { get; set; }
-        public ICollection<Competition> Competitions { get; set; }
+        public virtual ICollection<GameType> ChildGameTypes { get; set; }
+        public virtual ICollection<Competition> Competitions { get; set; }
     }
 }
