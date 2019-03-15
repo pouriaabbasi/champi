@@ -13,16 +13,19 @@ namespace champi.Libs.Implementations
         private readonly IUnitOfWork unitOfWork;
         private readonly IRepository<Competition> competitionRepo;
         private readonly IRepository<CompetitionTeam> competitionTeamRepo;
+        private readonly IRepository<CompetitionStep> competitionStepRepo;
 
         public CompetitionLib(
             IUnitOfWork unitOfWork,
             IRepository<Competition> competitionRepo,
-            IRepository<CompetitionTeam> competitionTeamRepo
+            IRepository<CompetitionTeam> competitionTeamRepo,
+            IRepository<CompetitionStep> competitionStepRepo
         )
         {
             this.unitOfWork = unitOfWork;
             this.competitionRepo = competitionRepo;
             this.competitionTeamRepo = competitionTeamRepo;
+            this.competitionStepRepo = competitionStepRepo;
         }
 
         public List<CompetitionModel> GetCompetitions()
@@ -133,6 +136,58 @@ namespace champi.Libs.Implementations
             unitOfWork.Commit();
 
             return true;
+        }
+
+        public bool UpdateCompetitionSteps(long competitionId, UpdateCompetitionStepsModel[] models)
+        {
+            var competitionSteps =
+                competitionStepRepo
+                    .GetAll()
+                    .Where(x => x.CompetitionId == competitionId);
+
+            foreach (var competitionStep in competitionSteps)
+                competitionStepRepo.Delete(competitionStep);
+
+            var step = 1;
+            foreach (var model in models)
+            {
+                competitionStepRepo.Add(new CompetitionStep
+                {
+                    CompetitionId = competitionId,
+                    CompetitionType = model.CompetitionType,
+                    EndDate = model.EndDate,
+                    IsCompleted = model.IsCompleted,
+                    IsStarted = model.IsStarted,
+                    StartDate = model.StartDate,
+                    Step = step++
+                });
+            }
+
+            unitOfWork.Commit();
+
+            return true;
+        }
+
+        public List<CompetitionStepModel> GetCompetitionSteps(long competitionId)
+        {
+            var result =
+                competitionStepRepo.GetAll()
+                    .Where(x => x.CompetitionId == competitionId)
+                    .OrderBy(x => x.Step)
+                    .Select(x => new CompetitionStepModel
+                    {
+                        CompetitionId = x.CompetitionId,
+                        CompetitionType = x.CompetitionType,
+                        CompetitionTypeString = x.CompetitionType.ToString(),
+                        EndDate = x.EndDate,
+                        Id = x.Id,
+                        IsCompleted = x.IsCompleted,
+                        IsStarted = x.IsStarted,
+                        StartDate = x.StartDate,
+                        Step = x.Step
+                    });
+
+            return result.ToList();
         }
 
         private int CalculateIteration(string name, long gameTypeId)

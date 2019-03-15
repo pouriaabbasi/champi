@@ -5,7 +5,56 @@
   </button>
 </div>
 <div class="modal-body">
-
+  <div class="form-group">
+    <label for="">Step Type: </label>
+    <select class="form-control" [(ngModel)]="tempStep.competitionType">
+      <option value="1">League</option>
+      <option value="2">Group</option>
+      <option value="3">Knockout</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>Start Date: </label>
+        <input type="text" placeholder="Enter Start Date" class="form-control" bsDatepicker
+          [(ngModel)]="tempStep.startDate">
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>End Date: </label>
+        <input type="text" placeholder="Enter End Date" class="form-control" bsDatepicker
+          [(ngModel)]="tempStep.endDate">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>Is Started: </label>
+        <ui-switch class="form-control" size="small" [(ngModel)]="tempStep.isStarted"></ui-switch>
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <div class="form-group">
+        <label>Is Completed: </label>
+        <ui-switch class="form-control" size="small" [(ngModel)]="tempStep.isCompleted"></ui-switch>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="addStep()">Add Step</button>
+  <br>
+  <ul [hidden]="!competitionSteps.length" class="list-group list-group-flush m-5">
+    <li class="list-group-item list-group-item-info" *ngFor="let competitionStep of competitionSteps;let i=index">
+      <span class="badge badge-info badge-pill m-1">{{i+1}}</span>
+      {{competitionStep.competitionTypeString}}
+      <span class="pull-right button-group">
+        <button type="button" class="btn btn-sm btn-danger" (click)="removeStep(competitionStep)"><span
+            class="fa fa-remove"></span></button>
+      </span>
+    </li>
+  </ul>
 </div>
 <div class="modal-footer">
   <button class="btn btn-success" (click)="submit()">Submit</button>

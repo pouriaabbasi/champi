@@ -19,6 +19,8 @@ namespace champi.Controllers
             this.competitionLib = competitionLib;
         }
 
+        #region GET
+
         [HttpGet]
         public IActionResult GetCompetitions()
         {
@@ -47,19 +49,22 @@ namespace champi.Controllers
             }
         }
 
-        // [HttpGet]
-        // public IActionResult GetTeamSelections()
-        // {
-        //     try
-        //     {
-        //         var result = teamLib.GetTeamSelections();
-        //         return CustomResult(result);
-        //     }
-        //     catch (Exception exp)
-        //     {
-        //         return CustomError(exp);
-        //     }
-        // }
+        [HttpGet("{competitionId}")]
+        public IActionResult GetCompetitionSteps(long competitionId)
+        {
+            try
+            {
+                var result = competitionLib.GetCompetitionSteps(competitionId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+        #endregion
+
+        #region POST
 
         [HttpPost]
         public IActionResult AddCompetition([FromBody] AddCompetitionModel model)
@@ -76,6 +81,10 @@ namespace champi.Controllers
                 return CustomError(exp);
             }
         }
+
+        #endregion
+
+        #region PUT
 
         [HttpPut("{competitionId}")]
         public IActionResult UpdateCompetition(long competitionId, [FromBody] UpdateCompetitionModel model)
@@ -105,6 +114,24 @@ namespace champi.Controllers
             }
         }
 
+        [HttpPut("{competitionId}")]
+        public IActionResult UpdateCompetitionSteps(long competitionId, [FromBody]UpdateCompetitionStepsModel[] model)
+        {
+            try
+            {
+                var result = competitionLib.UpdateCompetitionSteps(competitionId, model);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
+        #endregion
+
+        #region DELETE
+
         [HttpDelete("{competitionId}")]
         public IActionResult DeleteCompetition(long competitionId)
         {
@@ -118,5 +145,7 @@ namespace champi.Controllers
                 return CustomError(exp);
             }
         }
+
+        #endregion
     }
 }

@@ -6,6 +6,8 @@ import { CompetitionModel } from '../models/competition/competition.model';
 import { AddCompetitionModel } from '../models/competition/add-competition.model';
 import { UpdateCompetitionModel } from '../models/competition/update-competition.model';
 import { UpdateCompetitionTeamsModel } from '../models/competition/update-competition-teams.model';
+import { UpdateCompetitionStepsModel } from '../models/competition/update-competition-steps.model';
+import { CompetitionStepModel } from '../models/competition/competition-step.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +42,13 @@ export class CompetitionService extends BaseService {
 
   public getCompetitionTeamsId(id: number): Observable<number[]> {
     return super.get(`Competition/GetCompetitionTeamsId/${id}`);
+  }
+
+  public updateCompetitionSteps(id: number, model: UpdateCompetitionStepsModel[]): Observable<boolean> {
+    return super.put(`Competition/UpdateCompetitionSteps/${id}`, model);
+  }
+
+  public getCompetitionSteps(id: number): Observable<CompetitionStepModel[]> {
+    return super.get(`Competition/GetCompetitionSteps/${id}`);
   }
 }

@@ -11,5 +11,7 @@ namespace champi.Libs.Contracts
         CompetitionModel UpdateCompetition(long competitionId, UpdateCompetitionModel model);
         bool UpdateCompetitionTeams(long competitionId, UpdateCompetitionTeamsModel model);
         bool DeleteCompetition(long competitionId);
+        bool UpdateCompetitionSteps(long competitionId, UpdateCompetitionStepsModel[] models);
+        List<CompetitionStepModel> GetCompetitionSteps(long competitionId);
     }
 }
