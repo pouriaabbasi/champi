@@ -45,11 +45,14 @@
   </div>
   <button class="btn btn-primary" (click)="addStep()">Add Step</button>
   <br>
-  <ul [hidden]="!competitionSteps.length" class="list-group list-group-flush m-5">
+  <ul [hidden]="!competitionSteps.length" class="list-group list-group-flush m-1">
     <li class="list-group-item list-group-item-info" *ngFor="let competitionStep of competitionSteps;let i=index">
       <span class="badge badge-info badge-pill m-1">{{i+1}}</span>
-      {{competitionStep.competitionTypeString}}
+      {{competitionStep.competitionTypeString}} [{{competitionStep.startDatePersian}} -
+      {{competitionStep.endDatePersian}}]
       <span class="pull-right button-group">
+        <button type="button" class="btn btn-sm btn-info" *ngIf="competitionStep.id"
+          (click)="configStep(competitionStep)"><span class="fa fa-wrench"></span></button>
         <button type="button" class="btn btn-sm btn-danger" (click)="removeStep(competitionStep)"><span
             class="fa fa-remove"></span></button>
       </span>

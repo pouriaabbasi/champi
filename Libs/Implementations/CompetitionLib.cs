@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using champi.Context.Repository;
 using champi.Domain.Entity.Competition;
+using champi.Domain.Enum;
 using champi.Libs.Contracts;
 using champi.Models.Competition;
 
@@ -14,18 +15,21 @@ namespace champi.Libs.Implementations
         private readonly IRepository<Competition> competitionRepo;
         private readonly IRepository<CompetitionTeam> competitionTeamRepo;
         private readonly IRepository<CompetitionStep> competitionStepRepo;
+        private readonly IRepository<League> leagueRepo;
 
         public CompetitionLib(
             IUnitOfWork unitOfWork,
             IRepository<Competition> competitionRepo,
             IRepository<CompetitionTeam> competitionTeamRepo,
-            IRepository<CompetitionStep> competitionStepRepo
+            IRepository<CompetitionStep> competitionStepRepo,
+            IRepository<League> leagueRepo
         )
         {
             this.unitOfWork = unitOfWork;
             this.competitionRepo = competitionRepo;
             this.competitionTeamRepo = competitionTeamRepo;
             this.competitionStepRepo = competitionStepRepo;
+            this.leagueRepo = leagueRepo;
         }
 
         public List<CompetitionModel> GetCompetitions()
@@ -52,12 +56,18 @@ namespace champi.Libs.Implementations
             return result.ToList();
         }
 
-        public List<long> GetCompetitionTeamsId(long competitionId)
+        public List<CompetitionTeamModel> GetCompetitionTeams(long competitionId)
         {
             var result =
                 competitionTeamRepo.GetAll()
                     .Where(x => x.CompetitionId == competitionId)
-                    .Select(x => x.TeamId);
+                    .Select(x => new CompetitionTeamModel
+                    {
+                        Id = x.Id,
+                        CompetitionId = x.CompetitionId,
+                        TeamId = x.TeamId,
+                        TeamName = x.Team.Name
+                    });
 
             return result.ToList();
         }
@@ -188,6 +198,32 @@ namespace champi.Libs.Implementations
                     });
 
             return result.ToList();
+        }
+
+        public LeagueModel GetCompetitionLeague(long competitionStepId)
+        {
+            var competitionStepEntity =
+                competitionStepRepo.FirstOrDefault(x => x.Id == competitionStepId);
+            if (competitionStepEntity == null)
+                throw new Exception("Item Not Found");
+            if (competitionStepEntity.CompetitionType != CompetitionTypeKind.League)
+                throw new Exception("This Step Not League");
+
+            var leagueEntity =
+                leagueRepo.FirstOrDefault(x => x.CompetitionStepId == competitionStepId);
+            if (leagueEntity == null)
+                throw new Exception("Item Not Found");
+
+            return new LeagueModel
+            {
+                CompetitionStepId = leagueEntity.CompetitionStepId,
+                FallTeamCount = leagueEntity.FallTeamCount,
+                Id = leagueEntity.Id,
+                IsHomeAway = leagueEntity.IsHomeAway,
+                PeerToPeerPlayCount = leagueEntity.PeerToPeerPlayCount,
+                RiseTeamCount = leagueEntity.RiseTeamCount,
+                TeamCount = leagueEntity.TeamCount
+            };
         }
 
         private int CalculateIteration(string name, long gameTypeId)

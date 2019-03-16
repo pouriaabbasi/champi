@@ -6,6 +6,7 @@ import { CompetitionModel } from 'src/app/models/competition/competition.model';
 import { UpdateCompetitionStepsModel } from 'src/app/models/competition/update-competition-steps.model';
 import { CompetitionStepModel } from 'src/app/models/competition/competition-step.model';
 import { CompetitionService } from 'src/app/services/competition.service';
+import { CompetitionLeagueConfigModalComponent } from '../competition-league-config-modal/competition-league-config-modal.component';
 
 @Component({
   selector: 'app-competition-steps-modal',
@@ -51,11 +52,34 @@ export class CompetitionStepsModalComponent extends BasePage implements OnInit {
     this.tempStep = new UpdateCompetitionStepsModel();
   }
 
-  public removeStep(competitionStepModel: CompetitionStepModel) {
-    const index = this.competitionSteps.findIndex(x => x.step === competitionStepModel.step);
+  public removeStep(competitionStep: CompetitionStepModel) {
+    const index = this.competitionSteps.findIndex(x => x.step === competitionStep.step);
     if (index !== -1) {
       this.competitionSteps.splice(index, 1);
     }
+  }
+
+  public configStep(competitionStep: CompetitionStepModel) {
+    const initialState = {
+      competitionStep: { ...competitionStep }
+    };
+    let bsModalRef: BsModalRef;
+    switch (competitionStep.competitionType) {
+      case 1:
+        bsModalRef = this.modalService.show(CompetitionLeagueConfigModalComponent, {
+          initialState
+        });
+        break;
+      case 2:
+      case 3:
+      default:
+        break;
+    }
+    bsModalRef.content.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.showSuccess('Step Configuration was successful', 'Step Configuration');
+      }
+    });
   }
 
   public close() {

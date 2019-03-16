@@ -36,11 +36,11 @@ namespace champi.Controllers
         }
 
         [HttpGet("{competitionId}")]
-        public IActionResult GetCompetitionTeamsId(long competitionId)
+        public IActionResult GetCompetitionTeams(long competitionId)
         {
             try
             {
-                var result = competitionLib.GetCompetitionTeamsId(competitionId);
+                var result = competitionLib.GetCompetitionTeams(competitionId);
                 return CustomResult(result);
             }
             catch (Exception exp)
@@ -62,6 +62,21 @@ namespace champi.Controllers
                 return CustomError(exp);
             }
         }
+
+        [HttpGet("competitionStepId")]
+        public IActionResult GetCompetitionLeague(long competitionStepId)
+        {
+            try
+            {
+                var result = competitionLib.GetCompetitionLeague(competitionStepId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
         #endregion
 
         #region POST

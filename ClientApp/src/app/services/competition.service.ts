@@ -8,6 +8,8 @@ import { UpdateCompetitionModel } from '../models/competition/update-competition
 import { UpdateCompetitionTeamsModel } from '../models/competition/update-competition-teams.model';
 import { UpdateCompetitionStepsModel } from '../models/competition/update-competition-steps.model';
 import { CompetitionStepModel } from '../models/competition/competition-step.model';
+import { CompetitionTeamModel } from '../models/competition/competition-team.model';
+import { LeagueModel } from '../models/competition/league.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,27 +30,31 @@ export class CompetitionService extends BaseService {
     return super.post('Competition/AddCompetition', model);
   }
 
-  public updateCompetition(id: number, model: UpdateCompetitionModel): Observable<CompetitionModel> {
-    return super.put(`Competition/UpdateCompetition/${id}`, model);
+  public updateCompetition(competitionId: number, model: UpdateCompetitionModel): Observable<CompetitionModel> {
+    return super.put(`Competition/UpdateCompetition/${competitionId}`, model);
   }
 
-  public updateCompetitionTeams(id: number, model: UpdateCompetitionTeamsModel): Observable<boolean> {
-    return super.put(`Competition/UpdateCompetitionTeams/${id}`, model);
+  public updateCompetitionTeams(competitionId: number, model: UpdateCompetitionTeamsModel): Observable<boolean> {
+    return super.put(`Competition/UpdateCompetitionTeams/${competitionId}`, model);
   }
 
-  public deleteCompetition(id: number): Observable<boolean> {
-    return super.delete(`Competition/DeleteCompetition/${id}`);
+  public deleteCompetition(competitionId: number): Observable<boolean> {
+    return super.delete(`Competition/DeleteCompetition/${competitionId}`);
   }
 
-  public getCompetitionTeamsId(id: number): Observable<number[]> {
-    return super.get(`Competition/GetCompetitionTeamsId/${id}`);
+  public getCompetitionTeams(competitionId: number): Observable<CompetitionTeamModel[]> {
+    return super.get(`Competition/GetCompetitionTeams/${competitionId}`);
   }
 
-  public updateCompetitionSteps(id: number, model: UpdateCompetitionStepsModel[]): Observable<boolean> {
-    return super.put(`Competition/UpdateCompetitionSteps/${id}`, model);
+  public updateCompetitionSteps(competitionId: number, model: UpdateCompetitionStepsModel[]): Observable<boolean> {
+    return super.put(`Competition/UpdateCompetitionSteps/${competitionId}`, model);
   }
 
-  public getCompetitionSteps(id: number): Observable<CompetitionStepModel[]> {
-    return super.get(`Competition/GetCompetitionSteps/${id}`);
+  public getCompetitionSteps(competitionId: number): Observable<CompetitionStepModel[]> {
+    return super.get(`Competition/GetCompetitionSteps/${competitionId}`);
+  }
+
+  public getleague(competitionStepId: number): Observable<LeagueModel> {
+    return super.get(`Competition/GetCompetitionLeague/${competitionStepId}`);
   }
 }

@@ -7,6 +7,7 @@ import { CompetitionService } from 'src/app/services/competition.service';
 import { TeamService } from 'src/app/services/team.service';
 import { BaseSelectinoModel } from 'src/app/models/base/base-selection.model';
 import { UpdateCompetitionTeamsModel } from 'src/app/models/competition/update-competition-teams.model';
+import { CompetitionTeamModel } from 'src/app/models/competition/competition-team.model';
 
 @Component({
   selector: 'app-competition-teams-modal',
@@ -16,7 +17,7 @@ import { UpdateCompetitionTeamsModel } from 'src/app/models/competition/update-c
 export class CompetitionTeamsModalComponent extends BasePage implements OnInit {
   competition: CompetitionModel;
   teamSelections: BaseSelectinoModel[] = [];
-  competitionTeamsId: number[] = [];
+  competitionTeams: CompetitionTeamModel[] = [];
 
   constructor(
     protected modalService: BsModalService,
@@ -63,12 +64,12 @@ export class CompetitionTeamsModalComponent extends BasePage implements OnInit {
       .subscribe(selections => {
         this.teamSelections = selections;
 
-        this.competitionService.getCompetitionTeamsId(this.competition.id)
-          .subscribe(teamsId => {
-            this.competitionTeamsId = teamsId;
+        this.competitionService.getCompetitionTeams(this.competition.id)
+          .subscribe(teams => {
+            this.competitionTeams = teams;
 
-            this.competitionTeamsId.forEach(competitionTeamId => {
-              const selection = this.teamSelections.find(x => x.key === competitionTeamId);
+            this.competitionTeams.forEach(competitionTeam => {
+              const selection = this.teamSelections.find(x => x.key === competitionTeam.id);
               selection.selected = true;
             });
           });
