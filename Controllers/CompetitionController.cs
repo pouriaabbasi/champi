@@ -63,7 +63,7 @@ namespace champi.Controllers
             }
         }
 
-        [HttpGet("competitionStepId")]
+        [HttpGet("{competitionStepId}")]
         public IActionResult GetCompetitionLeague(long competitionStepId)
         {
             try

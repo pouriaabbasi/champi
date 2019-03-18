@@ -67,7 +67,8 @@ export class CompetitionStepsModalComponent extends BasePage implements OnInit {
     switch (competitionStep.competitionType) {
       case 1:
         bsModalRef = this.modalService.show(CompetitionLeagueConfigModalComponent, {
-          initialState
+          initialState,
+          class: 'modal-lg'
         });
         break;
       case 2:

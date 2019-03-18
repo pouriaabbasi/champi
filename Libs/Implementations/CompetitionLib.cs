@@ -205,14 +205,14 @@ namespace champi.Libs.Implementations
             var competitionStepEntity =
                 competitionStepRepo.FirstOrDefault(x => x.Id == competitionStepId);
             if (competitionStepEntity == null)
-                throw new Exception("Item Not Found");
+                return null;
             if (competitionStepEntity.CompetitionType != CompetitionTypeKind.League)
-                throw new Exception("This Step Not League");
+                return null;
 
             var leagueEntity =
                 leagueRepo.FirstOrDefault(x => x.CompetitionStepId == competitionStepId);
             if (leagueEntity == null)
-                throw new Exception("Item Not Found");
+                return null;
 
             return new LeagueModel
             {

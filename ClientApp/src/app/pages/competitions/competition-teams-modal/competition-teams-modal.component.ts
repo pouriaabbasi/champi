@@ -69,7 +69,7 @@ export class CompetitionTeamsModalComponent extends BasePage implements OnInit {
             this.competitionTeams = teams;
 
             this.competitionTeams.forEach(competitionTeam => {
-              const selection = this.teamSelections.find(x => x.key === competitionTeam.id);
+              const selection = this.teamSelections.find(x => x.key === competitionTeam.teamId);
               selection.selected = true;
             });
           });
