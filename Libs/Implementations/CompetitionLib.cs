@@ -71,6 +71,7 @@ namespace champi.Libs.Implementations
 
             return result.ToList();
         }
+
         public CompetitionModel AddCompetition(AddCompetitionModel model)
         {
             var entity = new Competition
@@ -222,7 +223,15 @@ namespace champi.Libs.Implementations
                 IsHomeAway = leagueEntity.IsHomeAway,
                 PeerToPeerPlayCount = leagueEntity.PeerToPeerPlayCount,
                 RiseTeamCount = leagueEntity.RiseTeamCount,
-                TeamCount = leagueEntity.TeamCount
+                TeamCount = leagueEntity.TeamCount,
+                LeagueTeams = leagueEntity.LeagueTeams
+                    .Select(x => new CompetitionTeamModel
+                    {
+                        CompetitionId = x.League.CompetitionStep.CompetitionId,
+                        Id = x.Id,
+                        TeamId = x.CompetitionTeam.TeamId,
+                        TeamName = x.CompetitionTeam.Team.Name
+                    }).ToList()
             };
         }
 

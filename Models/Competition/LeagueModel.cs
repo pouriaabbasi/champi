@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace champi.Models.Competition
 {
     public class LeagueModel
@@ -9,5 +11,6 @@ namespace champi.Models.Competition
         public int PeerToPeerPlayCount { get; set; }
         public int RiseTeamCount { get; set; }
         public int FallTeamCount { get; set; }
+        public List<CompetitionTeamModel> LeagueTeams { get; set; }
     }
 }

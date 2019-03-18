@@ -44,7 +44,7 @@ export class CompetitionLeagueConfigModalComponent extends BasePage implements O
   private fetchData() {
     this.competitionService.getleague(this.competitionStep.id)
       .subscribe(league => {
-        if (league) { 
+        if (league) {
           this.league = league;
         }
 
