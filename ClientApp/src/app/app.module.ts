@@ -29,9 +29,9 @@ import { TeamModalComponent } from './pages/teams/team-modal/team-modal.componen
 import { UiSwitchModule } from 'angular2-ui-switch';
 import { CompetitionTeamsModalComponent } from './pages/competitions/competition-teams-modal/competition-teams-modal.component';
 import { CompetitionStepsModalComponent } from './pages/competitions/competition-steps-modal/competition-steps-modal.component';
-import { DpDatePickerModule } from 'ng2-jalali-date-picker';
 // tslint:disable-next-line:max-line-length
 import { CompetitionLeagueConfigModalComponent } from './pages/competitions/competition-league-config-modal/competition-league-config-modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -64,7 +64,7 @@ import { CompetitionLeagueConfigModalComponent } from './pages/competitions/comp
     HttpClientModule,
     FormsModule,
     UiSwitchModule,
-    DpDatePickerModule,
+    NgbModule,
     CollapseModule.forRoot(),
     ToastrModule.forRoot(),
     ModalModule.forRoot(),

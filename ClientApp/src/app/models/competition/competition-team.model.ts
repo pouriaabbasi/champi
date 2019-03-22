@@ -3,4 +3,5 @@ export class CompetitionTeamModel {
     competitionId: number;
     teamId: number;
     teamName: string;
+    selected: boolean;
 }

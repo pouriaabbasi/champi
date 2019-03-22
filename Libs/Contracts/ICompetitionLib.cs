@@ -14,5 +14,7 @@ namespace champi.Libs.Contracts
         bool UpdateCompetitionSteps(long competitionId, UpdateCompetitionStepsModel[] models);
         List<CompetitionStepModel> GetCompetitionSteps(long competitionId);
         LeagueModel GetCompetitionLeague(long competitionStepId);
+        LeagueModel AddCompetitionLeague(AddLeagueModel model);
+        LeagueModel UpdateCompetitionLeague(long leagueId, UpdateLeagueModel model);
     }
 }

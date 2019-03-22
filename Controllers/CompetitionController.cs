@@ -97,6 +97,22 @@ namespace champi.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult AddCompetitionLeague([FromBody] AddLeagueModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return CustomError(ModelState);
+
+                var result = competitionLib.AddCompetitionLeague(model);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
         #endregion
 
         #region PUT
@@ -135,6 +151,22 @@ namespace champi.Controllers
             try
             {
                 var result = competitionLib.UpdateCompetitionSteps(competitionId, model);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
+        [HttpPut("{leagueId}")]
+        public IActionResult UpdateCompetitionLeague(long leagueId, [FromBody]UpdateLeagueModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return CustomError(ModelState);
+
+                var result = competitionLib.UpdateCompetitionLeague(leagueId, model);
                 return CustomResult(result);
             }
             catch (Exception exp)

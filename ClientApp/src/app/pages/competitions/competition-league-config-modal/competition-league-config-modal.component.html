@@ -34,14 +34,14 @@
 
   <fieldset class="fieldset">
     <legend>League Teams</legend>
-    <form class="form-horizontal">
+    <div class="form-horizontal">
       <div class="form-group">
         <div class="form-control" *ngFor="let team of competitionTeams">
-          <ui-switch size="small"></ui-switch>
+          <ui-switch size="small" [(ngModel)]="team.selected"></ui-switch>
           <label class="control-label">{{team.teamName}}</label>
         </div>
       </div>
-    </form>
+    </div>
   </fieldset>
 </div>
 <div class="modal-footer">

@@ -10,6 +10,8 @@ import { UpdateCompetitionStepsModel } from '../models/competition/update-compet
 import { CompetitionStepModel } from '../models/competition/competition-step.model';
 import { CompetitionTeamModel } from '../models/competition/competition-team.model';
 import { LeagueModel } from '../models/competition/league.model';
+import { AddLeagueModel } from '../models/competition/add-league.model';
+import { UpdateLeagueModel } from '../models/competition/update-league.model';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +58,13 @@ export class CompetitionService extends BaseService {
 
   public getleague(competitionStepId: number): Observable<LeagueModel> {
     return super.get(`Competition/GetCompetitionLeague/${competitionStepId}`);
+  }
+
+  public addLeague(model: AddLeagueModel): Observable<LeagueModel> {
+    return super.post('Competition/AddCompetitionLeague', model);
+  }
+
+  public updateLeague(leagueId: number, model: UpdateLeagueModel): Observable<LeagueModel> {
+    return super.put(`Competition/UpdateCompetitionLeague/${leagueId}`, model);
   }
 }

@@ -16,13 +16,15 @@ namespace champi.Libs.Implementations
         private readonly IRepository<CompetitionTeam> competitionTeamRepo;
         private readonly IRepository<CompetitionStep> competitionStepRepo;
         private readonly IRepository<League> leagueRepo;
+        private readonly IRepository<LeagueTeam> leagueTeamRepo;
 
         public CompetitionLib(
             IUnitOfWork unitOfWork,
             IRepository<Competition> competitionRepo,
             IRepository<CompetitionTeam> competitionTeamRepo,
             IRepository<CompetitionStep> competitionStepRepo,
-            IRepository<League> leagueRepo
+            IRepository<League> leagueRepo,
+            IRepository<LeagueTeam> leagueTeamRepo
         )
         {
             this.unitOfWork = unitOfWork;
@@ -30,6 +32,7 @@ namespace champi.Libs.Implementations
             this.competitionTeamRepo = competitionTeamRepo;
             this.competitionStepRepo = competitionStepRepo;
             this.leagueRepo = leagueRepo;
+            this.leagueTeamRepo = leagueTeamRepo;
         }
 
         public List<CompetitionModel> GetCompetitions()
@@ -88,7 +91,7 @@ namespace champi.Libs.Implementations
             competitionRepo.Add(entity);
             unitOfWork.Commit();
 
-            return MapEntityToModel(entity);
+            return MapEntityToCompetitionModel(entity);
         }
 
         public CompetitionModel UpdateCompetition(long competitionId, UpdateCompetitionModel model)
@@ -106,7 +109,7 @@ namespace champi.Libs.Implementations
 
             unitOfWork.Commit();
 
-            return MapEntityToModel(entity);
+            return MapEntityToCompetitionModel(entity);
         }
 
         public bool UpdateCompetitionTeams(long competitionId, UpdateCompetitionTeamsModel model)
@@ -225,14 +228,63 @@ namespace champi.Libs.Implementations
                 RiseTeamCount = leagueEntity.RiseTeamCount,
                 TeamCount = leagueEntity.TeamCount,
                 LeagueTeams = leagueEntity.LeagueTeams
-                    .Select(x => new CompetitionTeamModel
+                    .Select(x => new LeagueTeamModel
                     {
-                        CompetitionId = x.League.CompetitionStep.CompetitionId,
                         Id = x.Id,
+                        CompetitionTeamId = x.CompetitionTeamId,
                         TeamId = x.CompetitionTeam.TeamId,
                         TeamName = x.CompetitionTeam.Team.Name
                     }).ToList()
             };
+        }
+
+        public LeagueModel AddCompetitionLeague(AddLeagueModel model)
+        {
+            var entity = new League
+            {
+                CompetitionStepId = model.CompetitionStepId,
+                FallTeamCount = model.FallTeamCount,
+                IsHomeAway = model.IsHomeAway,
+                PeerToPeerPlayCount = model.PeerToPeerPlayCount,
+                RiseTeamCount = model.RiseTeamCount,
+                TeamCount = model.TeamCount,
+                LeagueTeams = model.LeagueTeams
+                    .Select(x => new LeagueTeam
+                    {
+                        CompetitionTeamId = x.CompetitionTeamId
+                    }).ToList()
+            };
+
+            leagueRepo.Add(entity);
+
+            unitOfWork.Commit();
+
+            return MapEntityToLegaueModel(entity);
+        }
+
+        public LeagueModel UpdateCompetitionLeague(long leagueId, UpdateLeagueModel model)
+        {
+            var entity = leagueRepo.FirstOrDefault(x => x.Id == leagueId);
+            if (entity == null) throw new Exception("Item Not Found");
+
+            entity.IsHomeAway = model.IsHomeAway;
+            entity.FallTeamCount = model.FallTeamCount;
+            entity.PeerToPeerPlayCount = model.PeerToPeerPlayCount;
+            entity.RiseTeamCount = model.RiseTeamCount;
+            entity.TeamCount = model.TeamCount;
+            foreach (var leagueTeam in entity.LeagueTeams)
+                leagueTeamRepo.Delete(leagueTeam);
+            entity.LeagueTeams = new List<LeagueTeam>();
+            foreach (var leagueTeam in model.LeagueTeams)
+                entity.LeagueTeams.Add(new LeagueTeam
+                {
+                    CompetitionTeamId = leagueTeam.CompetitionTeamId,
+                    LeagueId = entity.Id
+                });
+
+            unitOfWork.Commit();
+
+            return MapEntityToLegaueModel(entity);
         }
 
         private int CalculateIteration(string name, long gameTypeId)
@@ -246,7 +298,7 @@ namespace champi.Libs.Implementations
             return ++count;
         }
 
-        private CompetitionModel MapEntityToModel(Competition entity)
+        private CompetitionModel MapEntityToCompetitionModel(Competition entity)
         {
             return new CompetitionModel
             {
@@ -262,5 +314,29 @@ namespace champi.Libs.Implementations
                 TeamCount = entity.TeamCount
             };
         }
+
+        private LeagueModel MapEntityToLegaueModel(League entity)
+        {
+            return new LeagueModel
+            {
+                CompetitionStepId = entity.CompetitionStepId,
+                FallTeamCount = entity.FallTeamCount,
+                Id = entity.Id,
+                IsHomeAway = entity.IsHomeAway,
+                PeerToPeerPlayCount = entity.PeerToPeerPlayCount,
+                RiseTeamCount = entity.RiseTeamCount,
+                TeamCount = entity.TeamCount,
+                LeagueTeams = entity.LeagueTeams
+                    .Select(x => new LeagueTeamModel
+                    {
+                        CompetitionTeamId = x.CompetitionTeamId,
+                        Id = x.Id,
+                        //TODO:fill TeamName and TeamId
+                        // TeamId = x.CompetitionTeam.TeamId,
+                        // TeamName = x.CompetitionTeam.Team.Name
+                    }).ToList()
+            };
+        }
+
     }
 }
