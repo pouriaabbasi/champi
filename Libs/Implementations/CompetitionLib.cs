@@ -5,6 +5,7 @@ using champi.Context.Repository;
 using champi.Domain.Entity.Competition;
 using champi.Domain.Enum;
 using champi.Libs.Contracts;
+using champi.Libs.Extensions;
 using champi.Models.Competition;
 
 namespace champi.Libs.Implementations
@@ -17,6 +18,7 @@ namespace champi.Libs.Implementations
         private readonly IRepository<CompetitionStep> competitionStepRepo;
         private readonly IRepository<League> leagueRepo;
         private readonly IRepository<LeagueTeam> leagueTeamRepo;
+        private readonly IRepository<LeagueMatch> leagueMatchRepo;
 
         public CompetitionLib(
             IUnitOfWork unitOfWork,
@@ -24,7 +26,8 @@ namespace champi.Libs.Implementations
             IRepository<CompetitionTeam> competitionTeamRepo,
             IRepository<CompetitionStep> competitionStepRepo,
             IRepository<League> leagueRepo,
-            IRepository<LeagueTeam> leagueTeamRepo
+            IRepository<LeagueTeam> leagueTeamRepo,
+            IRepository<LeagueMatch> leagueMatchRepo
         )
         {
             this.unitOfWork = unitOfWork;
@@ -33,6 +36,7 @@ namespace champi.Libs.Implementations
             this.competitionStepRepo = competitionStepRepo;
             this.leagueRepo = leagueRepo;
             this.leagueTeamRepo = leagueTeamRepo;
+            this.leagueMatchRepo = leagueMatchRepo;
         }
 
         public List<CompetitionModel> GetCompetitions()
@@ -285,6 +289,59 @@ namespace champi.Libs.Implementations
             unitOfWork.Commit();
 
             return MapEntityToLegaueModel(entity);
+        }
+
+        public List<LeagueMatchModel> GenerateLeagueGames(long leagueId)
+        {
+            var entity = leagueRepo.FirstOrDefault(x => x.Id == leagueId);
+            if (entity == null) throw new Exception("Item Not Found!");
+
+            var teams = entity.LeagueTeams.ToList();
+            teams.Shuffle();
+
+            for (int k = 0; k < entity.PeerToPeerPlayCount; k++)
+            {
+                var isNormal = k % 2 == 0;
+                for (int i = 0; i < teams.Count; i++)
+                {
+                    for (int j = i + 1; j < teams.Count; j++)
+                    {
+                        leagueMatchRepo.Add(new LeagueMatch
+                        {
+                            LeagueId = entity.Id,
+                            FirstTeamId = teams[isNormal ? i : j].Id,
+                            SecondTeamId = teams[isNormal ? j : i].Id,
+                            MatchDate = entity.CompetitionStep.StartDate
+                        });
+                    }
+                }
+            }
+
+            unitOfWork.Commit();
+
+            return GetLeagueMatches(leagueId);
+        }
+
+        public List<LeagueMatchModel> GetLeagueMatches(long leagueId)
+        {
+            var result =
+                leagueMatchRepo.GetAll()
+                    .Where(x => x.LeagueId == leagueId)
+                    .Select(x => new LeagueMatchModel
+                    {
+                        FirstTeamId = x.FirstTeamId,
+                        FirstTeamName = x.FirstTeam.CompetitionTeam.Team.Name,
+                        FirstTeamScore = x.FirstTeamScore,
+                        Id = x.Id,
+                        MatchDate = x.MatchDate,
+                        SecondTeamId = x.SecondTeamId,
+                        SecondTeamName = x.SecondTeam.CompetitionTeam.Team.Name,
+                        SecondTeamScore = x.SecondTeamScore,
+                        WinnerTeamId = x.WinnerTeamId,
+                        WinnerTeamName = x.WinnerTeamId == null ? "" : x.WinnerTeam.CompetitionTeam.Team.Name
+                    });
+
+            return result.ToList();
         }
 
         private int CalculateIteration(string name, long gameTypeId)

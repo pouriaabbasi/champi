@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">League Matches Information</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <button class="btn btn-info" (click)="generateLeagueMatches()"
+    *ngIf="!leagueMatches || !leagueMatches.length">Generate
+    Matches</button>
+  <div class="row" *ngFor="let match of leagueMatches">
+    <div class="col col-md-4">{{match.firstTeamName}}</div>
+    <div class="col col-md-2">{{match.firstTeamScore==null?'---':match.firstTeamScore}}</div>
+    <div class="col col-md-2">{{match.secondTeamScore==null?'---':match.secondTeamScore}}</div>
+    <div class="col col-md-4">{{match.secondTeamName}}</div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-danger" (click)="close()">Close</button>
+</div>

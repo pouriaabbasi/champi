@@ -9,19 +9,24 @@ namespace champi.Domain.Map.Competition
         public void Configure(EntityTypeBuilder<LeagueMatch> builder)
         {
             builder
-                .HasOne(x=>x.FirstTeam)
-                .WithMany(x=>x.LeagueMatchesFirstTeam)
-                .HasForeignKey(x=>x.FirstTeamId)
+                .HasOne(x => x.League)
+                .WithMany(x => x.LeagueMatches)
+                .HasForeignKey(x => x.LeagueId)
                 .OnDelete(DeleteBehavior.Restrict);
             builder
-                .HasOne(x=>x.SecondTeam)
-                .WithMany(x=>x.LeagueMatchesSecondTeam)
-                .HasForeignKey(x=>x.SecondTeamId)
+                .HasOne(x => x.FirstTeam)
+                .WithMany(x => x.LeagueMatchesFirstTeam)
+                .HasForeignKey(x => x.FirstTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
             builder
-                .HasOne(x=>x.WinnerTeam)
-                .WithMany(x=>x.LeagueMatchesWinnerTeam)
-                .HasForeignKey(x=>x.WinnerTeamId)
+                .HasOne(x => x.SecondTeam)
+                .WithMany(x => x.LeagueMatchesSecondTeam)
+                .HasForeignKey(x => x.SecondTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder
+                .HasOne(x => x.WinnerTeam)
+                .WithMany(x => x.LeagueMatchesWinnerTeam)
+                .HasForeignKey(x => x.WinnerTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder

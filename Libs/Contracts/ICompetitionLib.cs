@@ -16,5 +16,7 @@ namespace champi.Libs.Contracts
         LeagueModel GetCompetitionLeague(long competitionStepId);
         LeagueModel AddCompetitionLeague(AddLeagueModel model);
         LeagueModel UpdateCompetitionLeague(long leagueId, UpdateLeagueModel model);
+        List<LeagueMatchModel> GenerateLeagueGames(long leagueId);
+        List<LeagueMatchModel> GetLeagueMatches(long leagueId);
     }
 }

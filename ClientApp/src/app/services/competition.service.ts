@@ -12,6 +12,7 @@ import { CompetitionTeamModel } from '../models/competition/competition-team.mod
 import { LeagueModel } from '../models/competition/league.model';
 import { AddLeagueModel } from '../models/competition/add-league.model';
 import { UpdateLeagueModel } from '../models/competition/update-league.model';
+import { LeagueMatchModel } from '../models/competition/league-match.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +67,13 @@ export class CompetitionService extends BaseService {
 
   public updateLeague(leagueId: number, model: UpdateLeagueModel): Observable<LeagueModel> {
     return super.put(`Competition/UpdateCompetitionLeague/${leagueId}`, model);
+  }
+
+  public getLeagueMatches(leagueId: number): Observable<LeagueMatchModel[]> {
+    return super.get(`Competition/GetLeagueMatches/${leagueId}`);
+  }
+
+  public generateLeagueGames(leagueId: number): Observable<LeagueMatchModel[]> {
+    return super.post(`Competition/GenerateLeagueGames/${leagueId}`, null);
   }
 }

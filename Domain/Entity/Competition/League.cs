@@ -16,5 +16,6 @@ namespace champi.Domain.Entity.Competition
 
         public virtual ICollection<LeagueTeam> LeagueTeams { get; set; }
         public virtual ICollection<LeagueResult> LeagueResults { get; set; }
+        public virtual ICollection<LeagueMatch> LeagueMatches { get; set; }
     }
 }
