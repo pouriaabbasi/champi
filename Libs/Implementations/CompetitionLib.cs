@@ -344,6 +344,27 @@ namespace champi.Libs.Implementations
             return result.ToList();
         }
 
+        public bool SetLeagueMatchScore(long leagueMatchId, SetMatchScoreModel model)
+        {
+            var entity = leagueMatchRepo.FirstOrDefault(x => x.Id == leagueMatchId);
+            if (entity == null) throw new Exception("Item Not Found");
+
+            var winnnerId =
+                model.FirstTeamScore == model.SecondTeamScore
+                    ? null
+                    : (long?)(model.FirstTeamScore > model.SecondTeamScore
+                        ? entity.FirstTeamId
+                        : entity.SecondTeamId);
+
+            entity.FirstTeamScore = model.FirstTeamScore;
+            entity.SecondTeamScore = model.SecondTeamScore;
+            entity.WinnerTeamId = winnnerId;
+
+            unitOfWork.Commit();
+
+            return true;
+        }
+
         private int CalculateIteration(string name, long gameTypeId)
         {
             var count =

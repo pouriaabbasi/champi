@@ -18,5 +18,6 @@ namespace champi.Libs.Contracts
         LeagueModel UpdateCompetitionLeague(long leagueId, UpdateLeagueModel model);
         List<LeagueMatchModel> GenerateLeagueGames(long leagueId);
         List<LeagueMatchModel> GetLeagueMatches(long leagueId);
+        bool SetLeagueMatchScore(long leagueMatchId, SetMatchScoreModel model);
     }
 }

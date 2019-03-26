@@ -9,10 +9,26 @@
     *ngIf="!leagueMatches || !leagueMatches.length">Generate
     Matches</button>
   <div class="row" *ngFor="let match of leagueMatches">
-    <div class="col col-md-4">{{match.firstTeamName}}</div>
-    <div class="col col-md-2">{{match.firstTeamScore==null?'---':match.firstTeamScore}}</div>
-    <div class="col col-md-2">{{match.secondTeamScore==null?'---':match.secondTeamScore}}</div>
-    <div class="col col-md-4">{{match.secondTeamName}}</div>
+    <div class="col col-md-1 text-center"></div>
+    <div class="col col-md-3 text-center">{{match.firstTeamName}}</div>
+    <div class="col col-md-1">
+      <input type="number" class='text-center' min="0" max="20" [disabled]='!match.editable'
+        [(ngModel)]="match.firstTeamScore">
+    </div>
+    <div class="col col-md-1">
+      <input type="number" class='text-center' min="0" max="20" [disabled]='!match.editable'
+        [(ngModel)]="match.secondTeamScore">
+    </div>
+    <div class="col col-md-3 text-center">{{match.secondTeamName}}</div>
+    <div class="col col-md-3 text-center">
+      <a class="btn btn-sm btn-primary m-1" [hidden]="match.editable" (click)="editable(match)"><i
+          class="fa fa-edit"></i></a>
+      <a class="btn btn-sm btn-danger m-1" [hidden]="!match.editable" (click)="cancel(match)"><i
+          class="fa fa-ban"></i></a>
+      <a class="btn btn-sm btn-success m-1" [hidden]="!match.editable" (click)="save(match)"><i
+          class="fa fa-save"></i></a>
+      <a class="btn btn-sm btn-info m-1"><i class="fa fa-sort"></i></a>
+    </div>
   </div>
 </div>
 <div class="modal-footer">

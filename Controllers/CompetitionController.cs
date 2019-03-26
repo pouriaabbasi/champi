@@ -127,20 +127,6 @@ namespace champi.Controllers
             }
         }
 
-        [HttpPost("{leagueId}")]
-        public IActionResult GenerateLeagueGames(long leagueId)
-        {
-            try
-            {
-                var result = competitionLib.GenerateLeagueGames(leagueId);
-                return CustomResult(result);
-            }
-            catch (Exception exp)
-            {
-                return CustomError(exp);
-            }
-        }
-
         #endregion
 
         #region PUT
@@ -195,6 +181,34 @@ namespace champi.Controllers
                 if (!ModelState.IsValid) return CustomError(ModelState);
 
                 var result = competitionLib.UpdateCompetitionLeague(leagueId, model);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
+        [HttpPost("{leagueId}")]
+        public IActionResult GenerateLeagueGames(long leagueId)
+        {
+            try
+            {
+                var result = competitionLib.GenerateLeagueGames(leagueId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
+        [HttpPut("{leagueMatchId}")]
+        public IActionResult SetLeagueMatchScore(long leagueMatchId, [FromBody]SetMatchScoreModel model)
+        {
+            try
+            {
+                var result = competitionLib.SetLeagueMatchScore(leagueMatchId, model);
                 return CustomResult(result);
             }
             catch (Exception exp)

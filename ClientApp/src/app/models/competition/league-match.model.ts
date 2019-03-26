@@ -10,4 +10,5 @@ export class LeagueMatchModel {
     winnerTeamName: string;
     matchDate?: Date;
     matchDatePersian: string;
+    editable: boolean;
 }
