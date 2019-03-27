@@ -5,9 +5,10 @@
   </button>
 </div>
 <div class="modal-body">
-  <button class="btn btn-info" (click)="generateLeagueMatches()"
-    *ngIf="!leagueMatches || !leagueMatches.length">Generate
-    Matches</button>
+  <div class="text-center">
+    <button class="btn btn-info" (click)="generateLeagueMatches()"
+      *ngIf="!leagueMatches || !leagueMatches.length">GenerateMatches</button>
+  </div>
   <div class="row" *ngFor="let match of leagueMatches">
     <div class="col col-md-1 text-center"></div>
     <div class="col col-md-3 text-center">{{match.firstTeamName}}</div>

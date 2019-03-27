@@ -189,7 +189,7 @@ namespace champi.Controllers
             }
         }
 
-        [HttpPost("{leagueId}")]
+        [HttpPut("{leagueId}")]
         public IActionResult GenerateLeagueGames(long leagueId)
         {
             try
