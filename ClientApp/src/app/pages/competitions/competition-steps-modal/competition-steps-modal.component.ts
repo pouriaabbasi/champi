@@ -9,6 +9,7 @@ import { CompetitionService } from 'src/app/services/competition.service';
 import { CompetitionLeagueConfigModalComponent } from '../competition-league-config-modal/competition-league-config-modal.component';
 // tslint:disable-next-line:max-line-length
 import { CompetitionLeagueMatchConfigModalComponent } from '../competition-league-match-config-modal/competition-league-match-config-modal.component';
+import { CompetitionLeagueResultComponent } from '../competition-league-result/competition-league-result.component';
 
 @Component({
   selector: 'app-competition-steps-modal',
@@ -69,6 +70,29 @@ export class CompetitionStepsModalComponent extends BasePage implements OnInit {
     switch (competitionStep.competitionType) {
       case 1:
         bsModalRef = this.modalService.show(CompetitionLeagueConfigModalComponent, {
+          initialState,
+          class: 'modal-lg'
+        });
+        break;
+      case 2:
+      case 3:
+      default:
+        break;
+    }
+    bsModalRef.content.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.showSuccess('Step Configuration was successful', 'Step Configuration');
+      }
+    });
+  }
+  public showResult(competitionStep: CompetitionStepModel) {
+    const initialState = {
+      competitionStep: { ...competitionStep }
+    };
+    let bsModalRef: BsModalRef;
+    switch (competitionStep.competitionType) {
+      case 1:
+        bsModalRef = this.modalService.show(CompetitionLeagueResultComponent, {
           initialState,
           class: 'modal-lg'
         });

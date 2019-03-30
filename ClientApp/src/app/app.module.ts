@@ -34,6 +34,7 @@ import { CompetitionLeagueConfigModalComponent } from './pages/competitions/comp
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // tslint:disable-next-line:max-line-length
 import { CompetitionLeagueMatchConfigModalComponent } from './pages/competitions/competition-league-match-config-modal/competition-league-match-config-modal.component';
+import { CompetitionLeagueResultComponent } from './pages/competitions/competition-league-result/competition-league-result.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { CompetitionLeagueMatchConfigModalComponent } from './pages/competitions
     CompetitionTeamsModalComponent,
     CompetitionStepsModalComponent,
     CompetitionLeagueConfigModalComponent,
-    CompetitionLeagueMatchConfigModalComponent
+    CompetitionLeagueMatchConfigModalComponent,
+    CompetitionLeagueResultComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +86,8 @@ import { CompetitionLeagueMatchConfigModalComponent } from './pages/competitions
     CompetitionTeamsModalComponent,
     CompetitionStepsModalComponent,
     CompetitionLeagueConfigModalComponent,
-    CompetitionLeagueMatchConfigModalComponent
+    CompetitionLeagueMatchConfigModalComponent,
+    CompetitionLeagueResultComponent
   ]
 })
 export class AppModule { }

@@ -51,6 +51,8 @@
       {{competitionStep.competitionTypeString}} [{{competitionStep.startDatePersian}} -
       {{competitionStep.endDatePersian}}]
       <span class="pull-right button-group">
+        <button type="button" class="btn btn-sm btn-success" *ngIf="competitionStep.id"
+          (click)="showResult(competitionStep)"><span class="fa fa-table"></span></button>
         <button type="button" class="btn btn-sm btn-warning" *ngIf="competitionStep.id"
           (click)="configMatches(competitionStep)"><span class="fa fa-gamepad"></span></button>
         <button type="button" class="btn btn-sm btn-info" *ngIf="competitionStep.id"

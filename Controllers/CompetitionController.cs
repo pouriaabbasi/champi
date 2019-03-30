@@ -91,6 +91,20 @@ namespace champi.Controllers
             }
         }
 
+        [HttpGet("{competitionStepId}")]
+        public IActionResult GetLeagueResult(long competitionStepId)
+        {
+            try
+            {
+                var result = competitionLib.GetLeagueResult(competitionStepId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
         #endregion
 
         #region POST

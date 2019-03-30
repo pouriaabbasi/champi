@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">League Result</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <table class="table table-dark table-bordered table-hover table-responsive table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Draw</th>
+        <th>Lost</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of leagueResult">
+        <th>{{result.rank}}</th>
+        <th>{{result.leagueTeamName}}</th>
+        <th>{{result.played}}</th>
+        <th>{{result.won}}</th>
+        <th>{{result.draw}}</th>
+        <th>{{result.lost}}</th>
+        <th>{{result.points}}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-danger" (click)="close()">Close</button>
+</div>

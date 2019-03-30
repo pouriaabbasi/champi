@@ -365,6 +365,33 @@ namespace champi.Libs.Implementations
             return true;
         }
 
+        public List<LeagueResultModel> GetLeagueResult(long competitionStepId)
+        {
+            var result = leagueResultRepo.GetAll()
+                .Where(x => x.League.CompetitionStepId == competitionStepId)
+                .OrderBy(x => x.Rank)
+                .Select(x => new LeagueResultModel
+                {
+                    Draw = x.Draw,
+                    GoalDifference = x.GoalDifference,
+                    GoalsAgainst = x.GoalsAgainst,
+                    GoalsFor = x.GoalsFor,
+                    Id = x.Id,
+                    LeagueId = x.LeagueId,
+                    LeagueResultType = x.LeagueResultType,
+                    LeagueTeamId = x.LeagueTeamId,
+                    Lost = x.Lost,
+                    LeagueTeamName = x.LeagueTeam.CompetitionTeam.Team.Name,
+                    Played = x.Played,
+                    Points = x.Points,
+                    PreviousPosition = x.PreviousPosition,
+                    Rank = x.Rank,
+                    Won = x.Won
+                });
+
+            return result.ToList();
+        }
+
         private bool UpdateLeagueResult(LeagueMatch leagueMatch, SetMatchScoreModel model, long? winnnerId)
         {
             var leagueResults = leagueResultRepo.GetAll()

@@ -14,6 +14,7 @@ import { AddLeagueModel } from '../models/competition/add-league.model';
 import { UpdateLeagueModel } from '../models/competition/update-league.model';
 import { LeagueMatchModel } from '../models/competition/league-match.model';
 import { SetMatchScoreModel } from '../models/competition/set-match-score.model';
+import { LeagueResultModel } from '../models/competition/league-result.model';
 
 @Injectable({
   providedIn: 'root'
@@ -80,5 +81,9 @@ export class CompetitionService extends BaseService {
 
   public setMatchScore(leagueMatchId: number, model: SetMatchScoreModel): Observable<boolean> {
     return super.put(`Competition/SetLeagueMatchScore/${leagueMatchId}`, model);
+  }
+
+  public getLeagueResult(competitinoStepId: number): Observable<LeagueResultModel[]> {
+    return super.get(`Competition/GetLeagueResult/${competitinoStepId}`);
   }
 }
