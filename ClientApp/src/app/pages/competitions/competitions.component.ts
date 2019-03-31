@@ -78,9 +78,9 @@ export class CompetitionsComponent extends BasePage implements OnInit {
       initialState
     });
     bsModalRef.content.onClose.subscribe((result: boolean) => {
-      if (result) {
-        this.fetchData();
-      }
+      // if (result) {
+      this.fetchData();
+      // }
     });
   }
 

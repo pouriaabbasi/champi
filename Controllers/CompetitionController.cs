@@ -231,6 +231,20 @@ namespace champi.Controllers
             }
         }
 
+        [HttpPut("{competitionStepId}")]
+        public IActionResult SetLeagueComplete(long competitionStepId)
+        {
+            try
+            {
+                var result = competitionLib.SetLeagueComplete(competitionStepId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
         #endregion
 
         #region DELETE

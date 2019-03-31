@@ -86,4 +86,8 @@ export class CompetitionService extends BaseService {
   public getLeagueResult(competitinoStepId: number): Observable<LeagueResultModel[]> {
     return super.get(`Competition/GetLeagueResult/${competitinoStepId}`);
   }
+
+  public SetLeagueComplete(competitionStepId: number): Observable<boolean> {
+    return super.put(`Competition/SetLeagueComplete/${competitionStepId}`, null);
+  }
 }

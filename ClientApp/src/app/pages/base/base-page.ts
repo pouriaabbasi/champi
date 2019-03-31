@@ -1,11 +1,11 @@
-import { Injectable, OnInit } from "@angular/core";
-import { BsModalService } from "ngx-bootstrap/modal";
-import { ConfirmComponent } from "src/app/components/confirm/confirm.component";
-import { Subject } from "rxjs";
-import { ToastrService } from "ngx-toastr";
+import { Injectable, OnInit } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ConfirmComponent } from 'src/app/components/confirm/confirm.component';
+import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export abstract class BasePage implements OnInit {
   protected onClose: Subject<boolean>;
@@ -13,7 +13,7 @@ export abstract class BasePage implements OnInit {
   constructor(
     protected modalService: BsModalService,
     protected toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onClose = new Subject();
@@ -22,7 +22,7 @@ export abstract class BasePage implements OnInit {
   public showConfirm(message: string): Subject<boolean> {
     const modalRef = this.modalService.show(ConfirmComponent, {
       initialState: { message: message },
-      class: "modal-dialog"
+      class: 'modal-dialog'
     });
     return modalRef.content.onClose;
   }

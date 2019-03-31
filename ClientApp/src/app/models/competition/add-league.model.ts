@@ -7,5 +7,8 @@ export class AddLeagueModel {
     peerToPeerPlayCount: number;
     riseTeamCount: number;
     fallTeamCount: number;
+    wonPoint: number;
+    drawPoint: number;
+    lostPoint: number;
     leagueTeams: AddLeagueTeamModel[];
 }

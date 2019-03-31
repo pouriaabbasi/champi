@@ -234,6 +234,9 @@ namespace champi.Libs.Implementations
                 PeerToPeerPlayCount = leagueEntity.PeerToPeerPlayCount,
                 RiseTeamCount = leagueEntity.RiseTeamCount,
                 TeamCount = leagueEntity.TeamCount,
+                DrawPoint = leagueEntity.DrawPoint,
+                LostPoint = leagueEntity.LostPoint,
+                WonPoint = leagueEntity.WonPoint,
                 LeagueTeams = GetLeagueTeams(leagueEntity.Id)
             };
         }
@@ -248,6 +251,9 @@ namespace champi.Libs.Implementations
                 PeerToPeerPlayCount = model.PeerToPeerPlayCount,
                 RiseTeamCount = model.RiseTeamCount,
                 TeamCount = model.TeamCount,
+                DrawPoint = model.DrawPoint,
+                LostPoint = model.LostPoint,
+                WonPoint = model.WonPoint,
                 LeagueTeams = model.LeagueTeams
                     .Select(x => new LeagueTeam
                     {
@@ -272,6 +278,9 @@ namespace champi.Libs.Implementations
             entity.PeerToPeerPlayCount = model.PeerToPeerPlayCount;
             entity.RiseTeamCount = model.RiseTeamCount;
             entity.TeamCount = model.TeamCount;
+            entity.WonPoint = model.WonPoint;
+            entity.DrawPoint = model.DrawPoint;
+            entity.LostPoint = model.LostPoint;
             foreach (var leagueTeam in entity.LeagueTeams)
                 leagueTeamRepo.Delete(leagueTeam);
             entity.LeagueTeams = new List<LeagueTeam>();
@@ -360,7 +369,7 @@ namespace champi.Libs.Implementations
 
             unitOfWork.Commit();
 
-            UpdateLeagueResult(entity, model, winnnerId);
+            UpdateLeagueResult(entity.LeagueId);
 
             return true;
         }
@@ -392,50 +401,134 @@ namespace champi.Libs.Implementations
             return result.ToList();
         }
 
-        private bool UpdateLeagueResult(LeagueMatch leagueMatch, SetMatchScoreModel model, long? winnnerId)
+        public bool SetLeagueComplete(long competitionStepId)
         {
-            var leagueResults = leagueResultRepo.GetAll()
-                .Where(x => x.LeagueId == leagueMatch.LeagueId);
+            var league = leagueRepo.FirstOrDefault(x => x.CompetitionStepId == competitionStepId);
+            if (league == null) throw new Exception("Item Not Found");
 
-            var firstTeam = leagueResults.First(x => x.LeagueTeamId == leagueMatch.FirstTeamId);
-            var secondTeam = leagueResults.First(x => x.LeagueTeamId == leagueMatch.SecondTeamId);
+            foreach (var leagueMatch in league.LeagueMatches.Where(x => x.FirstTeamScore == null))
+                leagueMatchRepo.Delete(leagueMatch);
 
-            firstTeam.Won = firstTeam.Won + (winnnerId != null && winnnerId == firstTeam.LeagueTeamId ? 1 : 0);
-            firstTeam.Points = firstTeam.Points + (winnnerId != null && winnnerId == firstTeam.LeagueTeamId ? 3 : 0);
-            firstTeam.Draw = firstTeam.Draw + (winnnerId == null ? 1 : 0);
-            firstTeam.Points = firstTeam.Points + (winnnerId == null ? 1 : 0);
-            firstTeam.Lost = firstTeam.Lost + (winnnerId != null && winnnerId != firstTeam.LeagueTeamId ? 1 : 0);
-            firstTeam.GoalsFor = firstTeam.GoalsFor + model.FirstTeamScore;
-            firstTeam.GoalsAgainst = firstTeam.GoalsAgainst + model.SecondTeamScore;
-            firstTeam.GoalDifference = firstTeam.GoalsFor - firstTeam.GoalsAgainst;
-            firstTeam.Played++;
+            var isLastStep = competitionStepRepo.GetAll()
+                .Count(x =>
+                    x.Id > league.CompetitionStepId
+                    && x.CompetitionId == league.CompetitionStep.CompetitionId);
 
-            secondTeam.Won = secondTeam.Won + (winnnerId != null && winnnerId == secondTeam.LeagueTeamId ? 1 : 0);
-            secondTeam.Points = secondTeam.Points + (winnnerId != null && winnnerId == secondTeam.LeagueTeamId ? 3 : 0);
-            secondTeam.Draw = secondTeam.Draw + (winnnerId == null ? 1 : 0);
-            secondTeam.Points = secondTeam.Points + (winnnerId == null ? 1 : 0);
-            secondTeam.Lost = secondTeam.Lost + (winnnerId != null && winnnerId != secondTeam.LeagueTeamId ? 1 : 0);
-            secondTeam.GoalsFor = secondTeam.GoalsFor + model.SecondTeamScore;
-            secondTeam.GoalsAgainst = secondTeam.GoalsAgainst + model.FirstTeamScore;
-            secondTeam.GoalDifference = secondTeam.GoalsFor - secondTeam.GoalsAgainst;
-            secondTeam.Played++;
-
-            var rank = 1;
-            foreach (var leagueResult in leagueResults
-                .OrderByDescending(x => x.Points)
-                .ThenByDescending(x => x.GoalDifference)
-                .ThenByDescending(x => x.GoalsFor)
-                .ThenByDescending(x => x.Won)
-                .ThenBy(x => x.LeagueTeam.CompetitionTeam.Team.Name))
-            {
-                leagueResult.LeagueResultType = rank == 1 ? LeagueResultTypeKind.Champion : LeagueResultTypeKind.Fall;
-                leagueResult.PreviousPosition = leagueResult.Rank;
-                leagueResult.Rank = rank++;
-            }
+            if (isLastStep == 0)
+                SetCompetitionChampoin(league);
 
             unitOfWork.Commit();
 
             return true;
+        }
+
+        private void SetCompetitionChampoin(League league)
+        {
+            var championTeam = league.LeagueResults.OrderBy(x => x.Rank).First();
+            league.CompetitionStep.Competition.ChampionTeamId = championTeam.LeagueTeam.CompetitionTeam.TeamId;
+        }
+
+        private bool UpdateLeagueResult(long leagueId)
+        {
+            var league = leagueRepo.FirstOrDefault(x => x.Id == leagueId);
+            if (league == null) throw new Exception("Item Not Found");
+
+            var leagueResults = leagueResultRepo.GetAll()
+                .Where(x => x.LeagueId == leagueId)
+                .Select(x => x);
+
+            var leagueMatches = leagueMatchRepo.GetAll()
+                .Where(x =>
+                    x.LeagueId == leagueId
+                    && x.FirstTeamScore != null)
+                .Select(x => x);
+
+            ResetLeagueResults(leagueResults);
+
+            foreach (var leagueMatch in leagueMatches)
+                UpdateLeagueResult(leagueResults, leagueMatch, league);
+
+            UpdateLeagueResultRank(leagueResults, league);
+
+            unitOfWork.Commit();
+
+            return true;
+        }
+
+        private void UpdateLeagueResultRank(IEnumerable<LeagueResult> leagueResults, League league)
+        {
+            var rank = 1;
+            var rankedLeagueResults = leagueResults
+                .OrderByDescending(x => x.Points)
+                .ThenByDescending(x => x.GoalDifference)
+                .ThenByDescending(x => x.GoalsFor)
+                .ThenBy(x => x.Played)
+                .ThenBy(x => x.LeagueTeam.CompetitionTeam.Team.Name);
+
+            foreach (var result in rankedLeagueResults)
+            {
+                result.PreviousPosition = result.Rank;
+                result.Rank = rank++;
+            }
+
+            rankedLeagueResults.First().LeagueResultType = LeagueResultTypeKind.Champion;
+            foreach (var riseResult in rankedLeagueResults.Skip(1).Take(league.RiseTeamCount - 1))
+                riseResult.LeagueResultType = LeagueResultTypeKind.Rise;
+
+            foreach (var fallResult in rankedLeagueResults.TakeLast(league.FallTeamCount))
+                fallResult.LeagueResultType = LeagueResultTypeKind.Fall;
+        }
+
+        private void UpdateLeagueResult(IEnumerable<LeagueResult> leagueResults, LeagueMatch leagueMatch, League league)
+        {
+            var firstTeam = leagueResults.First(x => x.LeagueTeamId == leagueMatch.FirstTeamId);
+            var secondTeam = leagueResults.First(x => x.LeagueTeamId == leagueMatch.SecondTeamId);
+
+            firstTeam.GoalsFor += leagueMatch.FirstTeamScore ?? 0;
+            firstTeam.GoalsAgainst += leagueMatch.SecondTeamScore ?? 0;
+            firstTeam.GoalDifference += (leagueMatch.FirstTeamScore ?? 0) - (leagueMatch.SecondTeamScore ?? 0);
+            firstTeam.Played++;
+
+            secondTeam.GoalsFor += leagueMatch.SecondTeamScore ?? 0;
+            secondTeam.GoalsAgainst += leagueMatch.FirstTeamScore ?? 0;
+            secondTeam.GoalDifference += (leagueMatch.SecondTeamScore ?? 0) - (leagueMatch.FirstTeamScore ?? 0);
+            secondTeam.Played++;
+
+            if (leagueMatch.WinnerTeamId == null)
+            {
+                firstTeam.Draw++;
+                firstTeam.Points += league.DrawPoint;
+                secondTeam.Draw++;
+                secondTeam.Points += league.DrawPoint;
+            }
+            else
+            {
+                var isFirstWinner = leagueMatch.WinnerTeamId == firstTeam.LeagueTeamId;
+
+                firstTeam.Won += isFirstWinner ? 1 : 0;
+                firstTeam.Lost += isFirstWinner ? 0 : 1;
+                firstTeam.Points += isFirstWinner ? league.WonPoint : league.LostPoint;
+
+                secondTeam.Won += isFirstWinner ? 0 : 1;
+                secondTeam.Lost += isFirstWinner ? 1 : 0;
+                secondTeam.Points += isFirstWinner ? league.LostPoint : league.WonPoint;
+            }
+        }
+
+        private void ResetLeagueResults(IEnumerable<LeagueResult> leagueResults)
+        {
+            foreach (var leagueResult in leagueResults)
+            {
+                leagueResult.LeagueResultType = LeagueResultTypeKind.Normal;
+                leagueResult.Lost = 0;
+                leagueResult.Played = 0;
+                leagueResult.Points = 0;
+                leagueResult.Won = 0;
+                leagueResult.Draw = 0;
+                leagueResult.GoalDifference = 0;
+                leagueResult.GoalsAgainst = 0;
+                leagueResult.GoalsFor = 0;
+            }
         }
 
         private bool GenerateLeagueResult(long leagueId)
@@ -522,17 +615,11 @@ namespace champi.Libs.Implementations
                 PeerToPeerPlayCount = entity.PeerToPeerPlayCount,
                 RiseTeamCount = entity.RiseTeamCount,
                 TeamCount = entity.TeamCount,
-                LeagueTeams = entity.LeagueTeams
-                    .Select(x => new LeagueTeamModel
-                    {
-                        CompetitionTeamId = x.CompetitionTeamId,
-                        Id = x.Id,
-                        //TODO:fill TeamName and TeamId
-                        // TeamId = x.CompetitionTeam.TeamId,
-                        // TeamName = x.CompetitionTeam.Team.Name
-                    }).ToList()
+                DrawPoint = entity.DrawPoint,
+                LostPoint = entity.LostPoint,
+                WonPoint = entity.WonPoint,
+                // LeagueTeams = GetLeagueTeams(entity.Id)
             };
         }
-
     }
 }

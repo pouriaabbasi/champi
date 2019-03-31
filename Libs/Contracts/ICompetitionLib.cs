@@ -20,5 +20,6 @@ namespace champi.Libs.Contracts
         List<LeagueMatchModel> GetLeagueMatches(long leagueId);
         bool SetLeagueMatchScore(long leagueMatchId, SetMatchScoreModel model);
         List<LeagueResultModel> GetLeagueResult(long competitinoStepId);
+        bool SetLeagueComplete(long competitionStepId);
     }
 }

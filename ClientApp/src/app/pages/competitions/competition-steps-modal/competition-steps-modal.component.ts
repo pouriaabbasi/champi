@@ -133,6 +133,28 @@ export class CompetitionStepsModalComponent extends BasePage implements OnInit {
     });
   }
 
+  public setComplete(competitionStep: CompetitionStepModel) {
+    switch (competitionStep.competitionType) {
+      case 1:
+        this.showConfirm('Are your sure!?')
+          .subscribe(result => {
+            if (result) {
+              this.competitionService.SetLeagueComplete(competitionStep.id)
+                .subscribe(result => {
+                  if (result) {
+                    this.showSuccess('League Closed Successfuly', 'Close League');
+                  }
+                });
+            }
+          });
+        break;
+      case 2:
+      case 3:
+      default:
+        break;
+    }
+  }
+
   public close() {
     this.modalRef.hide();
     this.onClose.next(false);
@@ -154,8 +176,7 @@ export class CompetitionStepsModalComponent extends BasePage implements OnInit {
       .subscribe(result => {
         if (result) {
           this.showSuccess('Competition Steps updated successfuly', 'Update Competition Steps');
-          this.modalRef.hide();
-          this.onClose.next(true);
+          this.fetchData();
         }
       });
   }

@@ -51,7 +51,10 @@ export class CompetitionLeagueConfigModalComponent extends BasePage implements O
       peerToPeerPlayCount: this.league.peerToPeerPlayCount,
       riseTeamCount: this.league.riseTeamCount,
       leagueTeams: [],
-      teamCount: 0
+      teamCount: 0,
+      drawPoint: this.league.drawPoint,
+      lostPoint: this.league.lostPoint,
+      wonPoint: this.league.wonPoint
     };
 
     this.competitionTeams.forEach(competitionTeam => {
@@ -76,12 +79,15 @@ export class CompetitionLeagueConfigModalComponent extends BasePage implements O
 
   private updateLeague() {
     const updateLeagueModel: UpdateLeagueModel = {
-      fallTeamCount: this.league.teamCount,
+      fallTeamCount: this.league.fallTeamCount,
       isHomeAway: this.league.isHomeAway,
       peerToPeerPlayCount: this.league.peerToPeerPlayCount,
       riseTeamCount: this.league.riseTeamCount,
       leagueTeams: [],
-      teamCount: 0
+      teamCount: 0,
+      drawPoint: this.league.drawPoint,
+      lostPoint: this.league.lostPoint,
+      wonPoint: this.league.wonPoint
     };
 
     this.competitionTeams.forEach(competitionTeam => {
