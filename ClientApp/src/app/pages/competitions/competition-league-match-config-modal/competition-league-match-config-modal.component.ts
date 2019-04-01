@@ -45,6 +45,14 @@ export class CompetitionLeagueMatchConfigModalComponent extends BasePage impleme
       });
   }
 
+  public generateExtraRound() {
+    this.competitionService
+      .generateExtraRound(this.league.id)
+      .subscribe(matches => {
+        this.leagueMatches = matches;
+      })
+  }
+
   public editable(match: LeagueMatchModel) {
     match.editable = true;
   }

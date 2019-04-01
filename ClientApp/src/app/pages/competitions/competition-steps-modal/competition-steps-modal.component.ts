@@ -139,7 +139,7 @@ export class CompetitionStepsModalComponent extends BasePage implements OnInit {
         this.showConfirm('Are your sure!?')
           .subscribe(result => {
             if (result) {
-              this.competitionService.SetLeagueComplete(competitionStep.id)
+              this.competitionService.setLeagueComplete(competitionStep.id)
                 .subscribe(result => {
                   if (result) {
                     this.showSuccess('League Closed Successfuly', 'Close League');

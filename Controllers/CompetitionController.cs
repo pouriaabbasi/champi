@@ -245,6 +245,20 @@ namespace champi.Controllers
             }
         }
 
+        [HttpPut("{leagueId}")]
+        public IActionResult GenerateExtraRound(long leagueId)
+        {
+            try
+            {
+                var result = competitionLib.GenerateExtraRound(leagueId);
+                return CustomResult(result);
+            }
+            catch (Exception exp)
+            {
+                return CustomError(exp);
+            }
+        }
+
         #endregion
 
         #region DELETE

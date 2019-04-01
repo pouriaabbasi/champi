@@ -10,6 +10,7 @@ namespace champi.Context.Repository
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
         T FirstOrDefault(Expression<Func<T, bool>> predicate);
         void Add(T entity);
+        void AddRange(IEnumerable<T> entities);
         void Delete(T entity);
         void Update(T entity);
     }

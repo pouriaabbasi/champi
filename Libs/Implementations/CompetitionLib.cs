@@ -42,6 +42,7 @@ namespace champi.Libs.Implementations
             this.leagueResultRepo = leagueResultRepo;
         }
 
+        #region Public
         public List<CompetitionModel> GetCompetitions()
         {
             var result =
@@ -307,19 +308,7 @@ namespace champi.Libs.Implementations
             for (int k = 0; k < entity.PeerToPeerPlayCount; k++)
             {
                 var isNormal = k % 2 == 0;
-                for (int i = 0; i < teams.Count; i++)
-                {
-                    for (int j = i + 1; j < teams.Count; j++)
-                    {
-                        leagueMatchRepo.Add(new LeagueMatch
-                        {
-                            LeagueId = entity.Id,
-                            FirstTeamId = teams[isNormal ? i : j].Id,
-                            SecondTeamId = teams[isNormal ? j : i].Id,
-                            MatchDate = entity.CompetitionStep.StartDate
-                        });
-                    }
-                }
+                leagueMatchRepo.AddRange(GenerateLeagueMatchs(isNormal, teams, entity));
             }
 
             unitOfWork.Commit();
@@ -422,6 +411,40 @@ namespace champi.Libs.Implementations
             return true;
         }
 
+        public List<LeagueMatchModel> GenerateExtraRound(long leagueId)
+        {
+            var league = leagueRepo.FirstOrDefault(x => x.Id == leagueId);
+            if (league == null) throw new Exception("Item Not Found");
+
+            var hasOpenMatch = leagueMatchRepo.GetAll()
+                .Any(x =>
+                    x.LeagueId == leagueId
+                    && x.FirstTeamScore == null);
+            if (hasOpenMatch) throw new Exception("We have open matches, it's not possible to create extra round!");
+
+            var maxleagueResultPoint = leagueResultRepo.GetAll()
+                .Where(x => x.LeagueId == leagueId)
+                .Max(x => x.Points);
+
+            var teams = leagueResultRepo.GetAll()
+                .Where(x =>
+                    x.LeagueId == leagueId
+                    && x.Points == maxleagueResultPoint)
+                .Select(x => x.LeagueTeam)
+                .ToList();
+
+            teams.Shuffle();
+
+            leagueMatchRepo.AddRange(GenerateLeagueMatchs(true, teams, league));
+
+            unitOfWork.Commit();
+
+            return GetLeagueMatches(leagueId);
+        }
+
+        #endregion
+
+        #region Private
         private void SetCompetitionChampoin(League league)
         {
             var championTeam = league.LeagueResults.OrderBy(x => x.Rank).First();
@@ -621,5 +644,28 @@ namespace champi.Libs.Implementations
                 // LeagueTeams = GetLeagueTeams(entity.Id)
             };
         }
+
+        private List<LeagueMatch> GenerateLeagueMatchs(bool isNormal, List<LeagueTeam> teams, League leagueEntity)
+        {
+            var result = new List<LeagueMatch>();
+            for (int i = 0; i < teams.Count; i++)
+            {
+                for (int j = i + 1; j < teams.Count; j++)
+                {
+                    result.Add(new LeagueMatch
+                    {
+                        LeagueId = leagueEntity.Id,
+                        FirstTeamId = teams[isNormal ? i : j].Id,
+                        SecondTeamId = teams[isNormal ? j : i].Id,
+                        MatchDate = leagueEntity.CompetitionStep.StartDate
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
     }
 }

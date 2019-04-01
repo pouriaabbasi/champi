@@ -7,7 +7,7 @@
 <div class="modal-body">
   <div class="text-center">
     <button class="btn btn-info" (click)="generateLeagueMatches()"
-      *ngIf="!leagueMatches || !leagueMatches.length">GenerateMatches</button>
+      *ngIf="leagueMatches && !leagueMatches.length">GenerateMatches</button>
   </div>
   <div class="row" *ngFor="let match of leagueMatches">
     <div class="col col-md-1 text-center"></div>
@@ -34,4 +34,6 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-danger" (click)="close()">Close</button>
+  <button class="btn btn-success" (click)="generateExtraRound()" *ngIf="leagueMatches && leagueMatches.length">Generate
+    Extra Matches</button>
 </div>

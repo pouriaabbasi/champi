@@ -19,6 +19,11 @@ namespace champi.Context.Repository
             _unitOfWork.Context.Set<T>().Add(entity);
         }
 
+        public void AddRange(IEnumerable<T> entities)
+        {
+            _unitOfWork.Context.Set<T>().AddRange(entities);
+        }
+
         public void Delete(T entity)
         {
             _unitOfWork.Context.Set<T>().Remove(entity);
