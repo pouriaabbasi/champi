@@ -1,5 +1,7 @@
 using champi.Domain.Entity.Competition;
+using champi.Domain.Entity.Security;
 using champi.Domain.Map.Competition;
+using champi.Domain.Map.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace champi.Context
@@ -19,10 +21,12 @@ namespace champi.Context
         public DbSet<LeagueMatch> LeagueMatches { get; set; }
         public DbSet<LeagueResult> LeagueResults { get; set; }
         public DbSet<LeagueTeam> LeagueTeams { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GameTypeMap).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserMap).Assembly);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
