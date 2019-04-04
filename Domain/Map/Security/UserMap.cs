@@ -8,6 +8,8 @@ namespace champi.Domain.Map.Security
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.Property(x => x.Username).HasMaxLength(100);
+            builder.Property(x => x.Password).HasMaxLength(200);
             builder.Property(x => x.FirstName).HasMaxLength(100);
             builder.Property(x => x.LastName).HasMaxLength(100);
 

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using champi.Controllers.Base;
 using champi.Libs.Contracts;
 using champi.Models.GameType;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace champi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     public class GameTypeController : BaseController
     {
