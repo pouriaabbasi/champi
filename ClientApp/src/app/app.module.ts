@@ -19,7 +19,7 @@ import { TypographyComponent } from './pages/typography/typography.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { GameTypesComponent } from './pages/game-types/game-types.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GameTypeModalComponent } from './pages/game-types/game-type-modal/game-type-modal.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { CompetitionsComponent } from './pages/competitions/competitions.component';
@@ -35,6 +35,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // tslint:disable-next-line:max-line-length
 import { CompetitionLeagueMatchConfigModalComponent } from './pages/competitions/competition-league-match-config-modal/competition-league-match-config-modal.component';
 import { CompetitionLeagueResultComponent } from './pages/competitions/competition-league-result/competition-league-result.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,8 @@ import { CompetitionLeagueResultComponent } from './pages/competitions/competiti
     CompetitionStepsModalComponent,
     CompetitionLeagueConfigModalComponent,
     CompetitionLeagueMatchConfigModalComponent,
-    CompetitionLeagueResultComponent
+    CompetitionLeagueResultComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +80,10 @@ import { CompetitionLeagueResultComponent } from './pages/competitions/competiti
     BsDatepickerModule.forRoot(),
     TypeaheadModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     ConfirmComponent,

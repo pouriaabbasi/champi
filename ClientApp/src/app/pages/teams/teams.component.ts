@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { TeamModel } from "src/app/models/team/team.model";
-import { BasePage } from "../base/base-page";
-import { BsModalService } from "ngx-bootstrap/modal";
-import { ToastrService } from "ngx-toastr";
-import { TeamService } from "src/app/services/team.service";
+import { Component, OnInit } from '@angular/core';
+import { TeamModel } from 'src/app/models/team/team.model';
+import { BasePage } from '../base/base-page';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { TeamService } from 'src/app/services/team.service';
 import { TeamModalComponent } from './team-modal/team-modal.component';
 
 @Component({
-  selector: "app-teams",
-  templateUrl: "./teams.component.html",
-  styleUrls: ["./teams.component.scss"]
+  selector: 'app-teams',
+  templateUrl: './teams.component.html',
+  styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent extends BasePage implements OnInit {
   teams: TeamModel[] = [];
@@ -42,7 +42,7 @@ export class TeamsComponent extends BasePage implements OnInit {
 
   public updateTean(team: TeamModel) {
     const initialState = {
-      team: {...team}
+      team: { ...team }
     };
     const bsModalRef = this.modalService.show(TeamModalComponent, {
       initialState

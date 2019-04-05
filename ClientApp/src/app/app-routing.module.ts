@@ -9,19 +9,22 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
 import { GameTypesComponent } from './pages/game-types/game-types.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { CompetitionsComponent } from './pages/competitions/competitions.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'game-types', component: GameTypesComponent },
-  { path: 'teams', component: TeamsComponent },
-  { path: 'competitions', component: CompetitionsComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'game-types', component: GameTypesComponent, canActivate: [AuthGuard] },
+  { path: 'teams', component: TeamsComponent, canActivate: [AuthGuard] },
+  { path: 'competitions', component: CompetitionsComponent, canActivate: [AuthGuard] },
 
-  { path: 'forms', component: FormsComponent },
-  { path: 'tables', component: TablesComponent },
-  { path: 'typography', component: TypographyComponent },
-  { path: 'maps', component: MapsComponent },
-  { path: 'notifications', component: NotificationsComponent }
+  // { path: 'forms', component: FormsComponent },
+  // { path: 'tables', component: TablesComponent },
+  // { path: 'typography', component: TypographyComponent },
+  // { path: 'maps', component: MapsComponent },
+  // { path: 'notifications', component: NotificationsComponent }
 ];
 
 @NgModule({

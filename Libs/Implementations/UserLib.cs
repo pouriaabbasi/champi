@@ -17,19 +17,16 @@ namespace champi.Libs.Implementations
         private readonly AppSettings appSettings;
         private readonly IUnitOfWork unitOfWork;
         private readonly IRepository<User> userRepo;
-        private readonly IRepository<UserToken> userTokenRepo;
 
         public UserLib(
             IOptions<AppSettings> appSettings,
             IUnitOfWork unitOfWork,
-            IRepository<User> userRepo,
-            IRepository<UserToken> userTokenRepo
+            IRepository<User> userRepo
         )
         {
             this.appSettings = appSettings.Value;
             this.unitOfWork = unitOfWork;
             this.userRepo = userRepo;
-            this.userTokenRepo = userTokenRepo;
         }
         public UserModel Login(LoginModel model)
         {
