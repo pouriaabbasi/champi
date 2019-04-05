@@ -65,6 +65,7 @@ namespace champi
             services.AddScoped<ITeamLib, TeamLib>();
             services.AddScoped<ICompetitionLib, CompetitionLib>();
             services.AddScoped<IUserLib, UserLib>();
+            services.AddScoped<IDashboardLib, DashboardLib>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

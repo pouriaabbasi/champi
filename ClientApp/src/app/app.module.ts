@@ -38,6 +38,7 @@ import { CompetitionLeagueResultComponent } from './pages/competitions/competiti
 import { LoginComponent } from './pages/login/login.component';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
     CompetitionLeagueConfigModalComponent,
     CompetitionLeagueMatchConfigModalComponent,
     CompetitionLeagueResultComponent,
-    LoginComponent
+    LoginComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,

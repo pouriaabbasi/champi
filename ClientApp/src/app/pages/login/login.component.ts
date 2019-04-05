@@ -28,14 +28,13 @@ export class LoginComponent extends BasePage implements OnInit {
 
   ngOnInit() {
     super.ngOnInit();
-
+    this.userService.logout();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   public login() {
     this.userService.login(this.model)
       .subscribe(result => {
-        debugger;
         if (result) {
           this.showSuccess('U login successfully', 'Login');
           this.router.navigate([this.returnUrl]);
