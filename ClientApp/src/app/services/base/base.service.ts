@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { BaseResultModel } from 'src/app/models/base/base-result.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class BaseService {
   baseUrl = 'http://localhost:5000/api/';
 
   constructor(
-    protected http: HttpClient
+    protected http: HttpClient,
+    protected toastr: ToastrService
   ) { }
 
   protected get<T>(url: string): Observable<T> {
@@ -27,7 +29,14 @@ export class BaseService {
     return this.http
       .post<BaseResultModel<T>>(`${this.baseUrl}${url}`, model)
       .pipe(
-        map(result => result.data)
+        map(result => {
+          debugger;
+          const data = result.data;
+          if (result.type != '1') {
+            this.toastr.error(result.message, 'ERROR');
+          }
+          return data;
+        })
       );
   }
 

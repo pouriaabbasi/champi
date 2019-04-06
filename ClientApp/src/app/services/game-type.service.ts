@@ -6,6 +6,7 @@ import { GameTypeModel } from '../models/game-type/game-type.model';
 import { AddGameTypeModel } from '../models/game-type/add-game-type-model';
 import { UpdateGameTypeModel } from '../models/game-type/update-game-type.model';
 import { BaseSelectinoModel } from '../models/base/base-selection.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,10 @@ import { BaseSelectinoModel } from '../models/base/base-selection.model';
 export class GameTypeService extends BaseService {
 
   constructor(
-    protected http: HttpClient
+    protected http: HttpClient,
+    protected toastr: ToastrService
   ) {
-    super(http);
+    super(http, toastr);
   }
 
   public getGameTypes(): Observable<GameTypeModel[]> {

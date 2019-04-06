@@ -5,6 +5,7 @@ import { LoginModel } from '../models/user/login.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserModel } from '../models/user/user.model';
 import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,10 @@ export class UserService extends BaseService {
   public currentUser: Observable<UserModel>;
 
   constructor(
-    protected http: HttpClient
+    protected http: HttpClient,
+    protected toastr: ToastrService
   ) {
-    super(http);
+    super(http, toastr);
     this.currentUserSubject = new BehaviorSubject<UserModel>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }

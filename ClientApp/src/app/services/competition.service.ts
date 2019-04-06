@@ -15,6 +15,7 @@ import { UpdateLeagueModel } from '../models/competition/update-league.model';
 import { LeagueMatchModel } from '../models/competition/league-match.model';
 import { SetMatchScoreModel } from '../models/competition/set-match-score.model';
 import { LeagueResultModel } from '../models/competition/league-result.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,10 @@ import { LeagueResultModel } from '../models/competition/league-result.model';
 export class CompetitionService extends BaseService {
 
   constructor(
-    protected http: HttpClient
+    protected http: HttpClient,
+    protected toastr: ToastrService
   ) {
-    super(http);
+    super(http, toastr);
   }
 
   public getCompetitions(): Observable<CompetitionModel[]> {

@@ -6,13 +6,17 @@ import { TeamModel } from '../models/team/team.model';
 import { AddTeamModel } from '../models/team/add-team.model';
 import { UpdateTeamModel } from '../models/team/update-team.model';
 import { BaseSelectinoModel } from '../models/base/base-selection.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService extends BaseService {
-  constructor(protected http: HttpClient) {
-    super(http);
+  constructor(
+    protected http: HttpClient,
+    protected toastr: ToastrService
+  ) {
+    super(http, toastr);
   }
 
   public getTeams(): Observable<TeamModel[]> {

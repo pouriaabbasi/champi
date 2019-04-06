@@ -22,7 +22,7 @@ namespace champi.Controllers.Base
 
         private IActionResult CustomError(string error, StatusCodeTypeKind statusCode, object result)
         {
-            return BadRequest(new BaseResult
+            return Ok(new BaseResult
             {
                 Type = statusCode,
                 Message = error,

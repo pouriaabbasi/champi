@@ -3,6 +3,7 @@ import { BaseService } from '../services/base/base.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StatisticsModel } from '../models/dashboard/statistics.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,10 @@ import { StatisticsModel } from '../models/dashboard/statistics.model';
 export class DashboardService extends BaseService {
 
   constructor(
-    protected http: HttpClient
+    protected http: HttpClient,
+    protected toastr: ToastrService
   ) {
-    super(http);
+    super(http, toastr);
   }
 
   public getStatistics(): Observable<StatisticsModel> {
