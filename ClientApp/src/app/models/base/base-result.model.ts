@@ -1,5 +1,5 @@
 export class BaseResultModel<T> {
-    type: string;
+    type: number;
     message: string;
     data: T;
 }

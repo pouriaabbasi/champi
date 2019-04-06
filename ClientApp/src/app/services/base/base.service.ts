@@ -30,9 +30,8 @@ export class BaseService {
       .post<BaseResultModel<T>>(`${this.baseUrl}${url}`, model)
       .pipe(
         map(result => {
-          debugger;
           const data = result.data;
-          if (result.type != '1') {
+          if (result.type !== 1) {
             this.toastr.error(result.message, 'ERROR');
           }
           return data;
